@@ -1,36 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import heroBottle from "../../assets/images/hero/hero-bottle.png";
 import heroLeaves from "../../assets/images/hero/hero-leaves.png";
 
 import "./Hero.css";
 
-const slides = [
-  {
-    id: 1,
-    desktopTitle: ["Let nature take", "care of your body", "and soul"],
-    mobileTitle: ["Let nature take", "care of your", "body and soul"],
-    buttonText: "Shop now",
-  },
-  {
-    id: 2,
-    desktopTitle: ["Botanical care", "for your glowing", "soft skin"],
-    mobileTitle: ["Botanical care", "for glowing", "soft skin"],
-    buttonText: "Explore now",
-  },
-  {
-    id: 3,
-    desktopTitle: ["Pure skincare", "made with nature", "and love"],
-    mobileTitle: ["Pure skincare", "made with nature", "and love"],
-    buttonText: "Discover",
-  },
-  {
-    id: 4,
-    desktopTitle: ["Fresh beauty", "for your body", "and soul"],
-    mobileTitle: ["Fresh beauty", "for your body", "and soul"],
-    buttonText: "Shop now",
-  },
-];
+const sliderDots = [1, 2, 3, 4];
 
 const ArrowIcon = () => (
   <svg viewBox="0 0 64 24" aria-hidden="true">
@@ -54,80 +29,68 @@ const CloseIcon = () => (
   </svg>
 );
 
-const ChevronDownIcon = () => (
+const ChevronIcon = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true">
     <path d="M6 9L12 15L18 9" />
   </svg>
 );
 
 const Hero = () => {
-  const [activeSlide, setActiveSlide] = useState(0);
+  const [activeDot, setActiveDot] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setActiveSlide((prev) => (prev + 1) % slides.length);
-    }, 5000);
-
-    return () => clearInterval(timer);
-  }, []);
-
-  useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "";
-
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [menuOpen]);
-
-  const currentSlide = slides[activeSlide];
-
   const handleNextSlide = () => {
-    setActiveSlide((prev) => (prev + 1) % slides.length);
+    setActiveDot((prev) => (prev + 1) % sliderDots.length);
   };
 
   const handlePrevSlide = () => {
-    setActiveSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
+    setActiveDot((prev) => (prev === 0 ? sliderDots.length - 1 : prev - 1));
   };
 
   return (
     <section className="beauty-hero" id="home">
       {/* ==================== Hero Background ==================== */}
-      <div className="beauty-hero__left-bg" />
+      <div className="beauty-hero__top">
+        <div className="beauty-hero__left-bg" />
 
-      <div className="beauty-hero__right-bg">
-        <img src={heroLeaves} alt="Green botanical leaves" />
-        <span />
+        <div className="beauty-hero__right-bg">
+          <img src={heroLeaves} alt="Green botanical leaves" />
+          <span />
+        </div>
+
+        <div className="beauty-hero__mobile-bg">
+          <img src={heroLeaves} alt="Green botanical leaves" />
+          <span />
+        </div>
       </div>
 
-      <div className="beauty-hero__mobile-bg">
-        <img src={heroLeaves} alt="Green botanical leaves" />
-        <span />
-      </div>
+      {/* ==================== Bottom Cream Area ==================== */}
+      <div className="beauty-hero__bottom" />
 
       {/* ==================== Header ==================== */}
       <header className="beauty-header">
-        <div className="beauty-container beauty-header__container">
+        <div className="beauty-container beauty-header__inner">
           <a href="#home" className="beauty-logo" aria-label="Velvety home">
             <span>Velvety</span>
             <small>facial & skincare</small>
           </a>
 
-          <nav className="beauty-header__nav" aria-label="Main navigation">
+          <nav className="beauty-nav" aria-label="Main navigation">
             <a href="#pages">
               Pages
-              <ChevronDownIcon />
+              <ChevronIcon />
             </a>
+
             <a href="#shop">Shop</a>
             <a href="#about">About</a>
           </nav>
 
-          <nav className="beauty-header__actions" aria-label="Account navigation">
+          <nav className="beauty-actions" aria-label="Account navigation">
             <a href="#login">Login</a>
             <a href="#cart">Cart (0)</a>
           </nav>
 
-          <nav className="beauty-header__mobile-links" aria-label="Mobile quick links">
+          <nav className="beauty-mobile-quick" aria-label="Mobile quick navigation">
             <a href="#shop">Shop</a>
             <a href="#cart">Cart (0)</a>
           </nav>
@@ -143,70 +106,64 @@ const Hero = () => {
         </div>
       </header>
 
-      {/* ==================== Slider Controls ==================== */}
-      <div className="beauty-slider-control" aria-label="Hero slider controls">
-        <button type="button" onClick={handleNextSlide} aria-label="Next slide">
-          <ArrowIcon />
-        </button>
+      {/* ==================== Hero Content Area ==================== */}
+      <div className="beauty-container beauty-hero__inner">
+        {/* ==================== Slider Controls ==================== */}
+        <div className="beauty-slider">
+          <button type="button" onClick={handleNextSlide} aria-label="Next slide">
+            <ArrowIcon />
+          </button>
 
-        <div>
-          {slides.map((slide, index) => (
-            <button
-              key={slide.id}
-              type="button"
-              onClick={() => setActiveSlide(index)}
-              className={activeSlide === index ? "active" : ""}
-              aria-label={`Go to slide ${index + 1}`}
-            />
-          ))}
+          <div className="beauty-slider__dots">
+            {sliderDots.map((dot, index) => (
+              <button
+                key={dot}
+                type="button"
+                className={activeDot === index ? "active" : ""}
+                onClick={() => setActiveDot(index)}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
+          </div>
+
+          <button
+            type="button"
+            className="beauty-slider__prev"
+            onClick={handlePrevSlide}
+            aria-label="Previous slide"
+          >
+            <ArrowIcon />
+          </button>
         </div>
 
-        <button
-          type="button"
-          onClick={handlePrevSlide}
-          className="prev"
-          aria-label="Previous slide"
-        >
-          <ArrowIcon />
-        </button>
-      </div>
+        {/* ==================== Product Image ==================== */}
+        <div className="beauty-product">
+          <img src={heroBottle} alt="Velvety skincare bottle" />
+        </div>
 
-      {/* ==================== Product Image ==================== */}
-      <div key={activeSlide} className="beauty-hero__product">
-        <span />
-        <img src={heroBottle} alt="Velvety glasswing skincare bottle" />
-      </div>
-
-      {/* ==================== Hero Content ==================== */}
-      <div className="beauty-container beauty-hero__content">
-        <div className="beauty-hero__text" key={currentSlide.id}>
-          <h1 className="beauty-title beauty-title--desktop">
-            {currentSlide.desktopTitle.map((line) => (
-              <span key={line}>{line}</span>
-            ))}
+        {/* ==================== Hero Text ==================== */}
+        <div className="beauty-copy">
+          <h1>
+            <span>Let nature take</span>
+            <span>care of your body</span>
+            <span>and soul</span>
           </h1>
 
-          <h1 className="beauty-title beauty-title--mobile">
-            {currentSlide.mobileTitle.map((line) => (
-              <span key={line}>{line}</span>
-            ))}
-          </h1>
-
-          <a href="#shop" className="beauty-hero__btn">
-            <span>{currentSlide.buttonText}</span>
+          <a href="#shop" className="beauty-shop-btn">
+            <span>Shop now</span>
             <ArrowIcon />
           </a>
         </div>
       </div>
 
       {/* ==================== Mobile Slider Dots ==================== */}
-      <div className="beauty-mobile-dots" aria-label="Mobile hero slider dots">
-        {slides.map((slide, index) => (
+      <div className="beauty-mobile-dots">
+        {sliderDots.map((dot, index) => (
           <button
-            key={slide.id}
+            key={dot}
             type="button"
-            onClick={() => setActiveSlide(index)}
-            className={activeSlide === index ? "active" : ""}
+            className={activeDot === index ? "active" : ""}
+            onClick={() => setActiveDot(index)}
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}
@@ -232,15 +189,19 @@ const Hero = () => {
           <a href="#pages" onClick={() => setMenuOpen(false)}>
             Pages
           </a>
+
           <a href="#shop" onClick={() => setMenuOpen(false)}>
             Shop
           </a>
+
           <a href="#about" onClick={() => setMenuOpen(false)}>
             About
           </a>
+
           <a href="#login" onClick={() => setMenuOpen(false)}>
             Login
           </a>
+
           <a href="#cart" onClick={() => setMenuOpen(false)}>
             Cart (0)
           </a>
