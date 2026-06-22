@@ -1,0 +1,625 @@
+.beauty-container {
+  width: min(calc(100% - clamp(32px, 11.111vw, 160px)), 1440px);
+  margin: 0 auto;
+}
+
+.beauty-hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 800px;
+  overflow: hidden;
+  isolation: isolate;
+  background: #000;
+}
+
+.beauty-hero__left-bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  width: 49.35%;
+  height: calc(100% - 80px);
+  background: #8fa58d;
+}
+
+.beauty-hero__right-bg {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 1;
+  width: 50.65%;
+  height: calc(100% - 80px);
+  overflow: hidden;
+}
+
+.beauty-hero__right-bg img,
+.beauty-hero__mobile-bg img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.beauty-hero__right-bg img {
+  object-position: center center;
+}
+
+.beauty-hero__right-bg span {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.beauty-hero__mobile-bg {
+  display: none;
+}
+
+.beauty-header {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 30;
+  width: 100%;
+  padding-top: 18px;
+}
+
+.beauty-header__container {
+  position: relative;
+  height: 58px;
+}
+
+.beauty-logo {
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #f6f8f1;
+  text-align: center;
+  text-decoration: none;
+}
+
+.beauty-logo span {
+  display: block;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 34px;
+  font-weight: 400;
+  line-height: 0.82;
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+}
+
+.beauty-logo small {
+  display: block;
+  margin-top: 7px;
+  font-family: "Great Vibes", cursive;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-transform: lowercase;
+}
+
+.beauty-header__nav,
+.beauty-header__actions,
+.beauty-header__mobile-links {
+  position: absolute;
+  top: 19px;
+  display: flex;
+  align-items: center;
+}
+
+.beauty-header__nav {
+  left: 53.5%;
+  gap: 49px;
+  transform: translateX(-8px);
+}
+
+.beauty-header__actions {
+  right: 0;
+  gap: 48px;
+}
+
+.beauty-header__nav a,
+.beauty-header__actions a,
+.beauty-header__mobile-links a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #f6f8f1;
+  font-family: "Inter", sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.beauty-header__nav a::after,
+.beauty-header__actions a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -9px;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.35s ease;
+}
+
+.beauty-header__nav a:hover::after,
+.beauty-header__actions a:hover::after {
+  width: 100%;
+}
+
+.beauty-header__nav svg {
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+}
+
+.beauty-header__mobile-links,
+.beauty-menu-btn {
+  display: none;
+}
+
+.beauty-slider-control {
+  position: absolute;
+  left: clamp(54px, 4.72vw, 68px);
+  top: 36.7%;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 21px;
+}
+
+.beauty-slider-control button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #f5f7f0;
+  cursor: pointer;
+}
+
+.beauty-slider-control > button svg {
+  display: block;
+  width: 31px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.65;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.beauty-slider-control > button.prev {
+  transform: rotate(180deg);
+}
+
+.beauty-slider-control div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin: 1px 0;
+}
+
+.beauty-slider-control div button,
+.beauty-mobile-dots button {
+  width: 4px;
+  height: 4px;
+  padding: 0;
+  border: 0;
+  background: #f5f7f0;
+  transform: rotate(45deg);
+  cursor: pointer;
+}
+
+.beauty-slider-control div button.active,
+.beauty-mobile-dots button.active {
+  background: #294b2e;
+}
+
+.beauty-hero__product {
+  position: absolute;
+  left: clamp(214px, 17.43vw, 251px);
+  top: 10.15%;
+  z-index: 12;
+  height: min(86.5vh, 692px);
+  transform: rotate(-6.5deg);
+  transform-origin: center center;
+}
+
+.beauty-hero__product img {
+  display: block;
+  width: auto;
+  height: 100%;
+  object-fit: contain;
+}
+
+.beauty-hero__content {
+  position: relative;
+  z-index: 18;
+  height: 100%;
+}
+
+.beauty-hero__text {
+  position: absolute;
+  left: 36.5%;
+  top: 20.3%;
+  width: min(58vw, 850px);
+  animation: beautyTextFade 0.7s ease both;
+}
+
+.beauty-title {
+  margin: 0;
+  color: #f5f7f0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(86px, 7.9vw, 118px);
+  font-weight: 300;
+  line-height: 1.005;
+  letter-spacing: -0.048em;
+}
+
+.beauty-title span {
+  display: block;
+}
+
+.beauty-title--mobile {
+  display: none;
+}
+
+.beauty-hero__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+  width: 356px;
+  height: 72px;
+  margin-top: 83px;
+  color: #233b25;
+  background: #f4f7f0;
+  font-family: "Inter", sans-serif;
+  font-size: 23px;
+  font-weight: 400;
+  line-height: 1;
+  text-decoration: none;
+  transition: background 0.35s ease, transform 0.35s ease;
+}
+
+.beauty-hero__btn:hover {
+  background: #fff;
+  transform: translateY(-2px);
+}
+
+.beauty-hero__btn svg {
+  display: block;
+  width: 31px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.65;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.35s ease;
+}
+
+.beauty-hero__btn:hover svg {
+  transform: translateX(6px);
+}
+
+.beauty-mobile-dots,
+.beauty-menu-overlay,
+.beauty-mobile-menu {
+  display: none;
+}
+
+@keyframes beautyTextFade {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (min-width: 1600px) {
+  .beauty-container {
+    width: min(calc(100% - 180px), 1500px);
+  }
+
+  .beauty-hero__product {
+    left: calc(50% - 470px);
+  }
+
+  .beauty-hero__text {
+    left: calc(50% - 170px);
+    width: 900px;
+  }
+
+  .beauty-title {
+    font-size: clamp(110px, 6.25vw, 124px);
+  }
+}
+
+@media (max-width: 1280px) {
+  .beauty-container {
+    width: min(calc(100% - 96px), 1180px);
+  }
+
+  .beauty-hero__product {
+    left: 16.6%;
+    height: min(84.5vh, 660px);
+  }
+
+  .beauty-hero__text {
+    left: 35.5%;
+    width: 760px;
+  }
+
+  .beauty-title {
+    font-size: clamp(78px, 7.45vw, 96px);
+  }
+}
+
+@media (max-width: 1023px) {
+  .beauty-container {
+    width: calc(100% - 32px);
+  }
+
+  .beauty-hero {
+    height: 100svh;
+    min-height: 812px;
+    background: #07100b;
+  }
+
+  .beauty-hero__left-bg,
+  .beauty-hero__right-bg,
+  .beauty-slider-control {
+    display: none;
+  }
+
+  .beauty-hero__mobile-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: block;
+    overflow: hidden;
+  }
+
+  .beauty-hero__mobile-bg img {
+    object-position: center center;
+    transform: scale(1.02);
+  }
+
+  .beauty-hero__mobile-bg span {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.22);
+  }
+
+  .beauty-header {
+    padding-top: 15px;
+  }
+
+  .beauty-header__container {
+    height: 44px;
+  }
+
+  .beauty-logo {
+    left: 0;
+    top: 0;
+  }
+
+  .beauty-logo span {
+    font-size: 30px;
+    line-height: 0.82;
+    letter-spacing: 0.035em;
+  }
+
+  .beauty-logo small {
+    margin-top: 5px;
+    font-size: 14px;
+  }
+
+  .beauty-header__nav,
+  .beauty-header__actions {
+    display: none;
+  }
+
+  .beauty-header__mobile-links {
+    top: 16px;
+    right: 50px;
+    display: flex;
+    gap: 17px;
+  }
+
+  .beauty-header__mobile-links a {
+    font-size: 15px;
+    letter-spacing: 0;
+  }
+
+  .beauty-menu-btn {
+    position: absolute;
+    top: 3px;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 31px;
+    height: 31px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: #f4f7f0;
+    color: #213724;
+    cursor: pointer;
+  }
+
+  .beauty-menu-btn svg,
+  .beauty-mobile-menu__close svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+  }
+
+  .beauty-hero__content {
+    width: 100%;
+    height: 100%;
+  }
+
+  .beauty-hero__text {
+    left: 50%;
+    top: 104px;
+    width: min(calc(100% - 42px), 350px);
+    text-align: center;
+    transform: translateX(-50%);
+    animation: none;
+  }
+
+  .beauty-title--desktop {
+    display: none;
+  }
+
+  .beauty-title--mobile {
+    display: block;
+    font-size: clamp(46px, 13.15vw, 52px);
+    line-height: 1.02;
+    letter-spacing: -0.055em;
+  }
+
+  .beauty-hero__btn {
+    width: 176px;
+    height: 53px;
+    margin: 28px auto 0;
+    gap: 14px;
+    font-size: 17px;
+  }
+
+  .beauty-hero__btn svg {
+    width: 32px;
+    height: 17px;
+  }
+
+  .beauty-hero__product {
+    left: 50%;
+    top: 377px;
+    height: 353px;
+    max-height: none;
+    transform: translateX(-50%) rotate(-5.5deg);
+  }
+
+  .beauty-mobile-dots {
+    position: absolute;
+    left: 50%;
+    bottom: 31px;
+    z-index: 20;
+    display: flex;
+    gap: 10px;
+    transform: translateX(-50%);
+  }
+
+  .beauty-menu-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+    display: block;
+    visibility: hidden;
+    background: rgba(0, 0, 0, 0.52);
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  .beauty-menu-overlay.show {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .beauty-mobile-menu {
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 90;
+    display: block;
+    width: min(78vw, 330px);
+    height: 100%;
+    padding: 25px;
+    background: #eef4ec;
+    transform: translateX(100%);
+    transition: transform 0.45s ease;
+  }
+
+  .beauty-mobile-menu.show {
+    transform: translateX(0);
+  }
+
+  .beauty-mobile-menu__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 39px;
+    height: 39px;
+    margin-left: auto;
+    padding: 0;
+    border: 1px solid rgba(35, 59, 37, 0.2);
+    background: transparent;
+    color: #233b25;
+    cursor: pointer;
+  }
+
+  .beauty-mobile-menu nav {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    margin-top: 55px;
+  }
+
+  .beauty-mobile-menu nav a {
+    color: #233b25;
+    font-family: "Inter", sans-serif;
+    font-size: 17px;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+}
+
+@media (max-width: 390px) {
+  .beauty-hero {
+    min-height: 812px;
+  }
+
+  .beauty-hero__product {
+    top: 377px;
+    height: 353px;
+  }
+}
+
+@media (max-width: 360px) {
+  .beauty-header__mobile-links {
+    right: 45px;
+    gap: 12px;
+  }
+
+  .beauty-header__mobile-links a {
+    font-size: 14px;
+  }
+
+  .beauty-title--mobile {
+    font-size: 44px;
+  }
+
+  .beauty-hero__product {
+    top: 382px;
+    height: 335px;
+  }
+}
