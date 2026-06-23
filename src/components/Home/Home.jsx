@@ -1,5 +1,6 @@
 import Hero from "../Hero/Hero";
 import TraditionSection from "../TraditionSection/TraditionSection";
+import FeaturedProducts from "../FeaturedProducts/FeaturedProducts";
 
 const Home = () => {
   return (
@@ -9,6 +10,9 @@ const Home = () => {
 
       {/* ==================== Tradition Section ==================== */}
       <TraditionSection />
+
+      {/* ==================== Featured Products Section ==================== */}
+      <FeaturedProducts />
     </main>
   );
 };
