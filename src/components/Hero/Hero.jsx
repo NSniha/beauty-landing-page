@@ -141,10 +141,10 @@ const Hero = () => {
   return (
     <section
       id="home"
-      className="relative isolate h-screen min-h-[850px] w-full overflow-hidden bg-[#eef3ec] max-[1600px]:min-h-[820px] max-[1440px]:min-h-[800px] max-[1280px]:min-h-[760px] max-[1024px]:min-h-[700px] max-[880px]:min-h-[660px] max-[767px]:h-[100svh] max-[767px]:min-h-[720px] max-[767px]:bg-[#07100b]"
+      className="relative isolate z-20 h-[clamp(650px,50.78vw,1040px)] min-h-[650px] w-full overflow-visible bg-[#f2f6ef] max-[1024px]:h-[760px] max-[880px]:h-[700px] max-[767px]:h-[100svh] max-[767px]:min-h-[720px] max-[767px]:overflow-hidden max-[767px]:bg-[#07100b]"
     >
       {/* ==================== Hero Background ==================== */}
-      <div className="absolute inset-x-0 top-0 z-[1] h-[83.34%] max-[767px]:h-full">
+      <div className="absolute inset-0 z-[1] h-full">
         <div className="absolute left-0 top-0 h-full w-[49.35%] bg-[#8fa58d] max-[767px]:hidden" />
 
         <div className="absolute right-0 top-0 h-full w-[50.65%] overflow-hidden max-[767px]:hidden">
@@ -168,9 +168,6 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* ==================== Bottom Cream Area ==================== */}
-      <div className="absolute bottom-0 left-0 z-0 h-[16.66%] w-full bg-[#eef3ec] max-[767px]:hidden" />
-
       {/* ==================== Header ==================== */}
       <header className="absolute left-0 top-0 z-40 w-full pt-[27px] max-[1024px]:pt-[22px] max-[767px]:pt-[15px]">
         <div className={`${containerClass} relative h-[64px] max-[767px]:h-[44px]`}>
@@ -183,7 +180,7 @@ const Hero = () => {
               Velvety
             </span>
 
-            <small className="mt-[8px] block font-['Great_Vibes',cursive] text-[17px] font-normal lowercase leading-none tracking-[0.01em] max-[1440px]:text-[16px] max-[1024px]:mt-[6px] max-[1024px]:text-[14px] max-[880px]:text-[13px] max-[767px]:mt-[5px] max-[767px]:pl-[17px] max-[767px]:text-[clamp(12px,3.6vw,14px)] max-[360px]:pl-[15px]">
+            <small className="mt-[5px] block font-['Great_Vibes',cursive] text-[17px] font-normal lowercase leading-none tracking-[0.04em] max-[1440px]:text-[16px] max-[1024px]:mt-[6px] max-[1024px]:text-[14px] max-[880px]:text-[13px] max-[767px]:mt-[5px] max-[767px]:pl-[17px] max-[767px]:text-[clamp(12px,3.6vw,14px)] max-[360px]:pl-[15px]">
               facial & skincare
             </small>
           </a>
@@ -274,6 +271,7 @@ const Hero = () => {
                 }`}
                 onClick={() => setActiveDot(index)}
                 aria-label={`Go to ${slide.productName}`}
+                aria-current={activeDot === index ? "true" : "false"}
               />
             ))}
           </div>
@@ -291,21 +289,21 @@ const Hero = () => {
         {/* ==================== Product Image ==================== */}
         <div
           key={activeSlide.id}
-          className="beauty-product-animate pointer-events-none absolute left-[3.2%] top-[9.5%] z-[22] h-[87%] min-h-[680px] origin-center max-[1600px]:left-[3%] max-[1600px]:top-[9.2%] max-[1600px]:h-[88%] max-[1600px]:min-h-[660px] max-[1440px]:left-[2.7%] max-[1440px]:top-[9.8%] max-[1440px]:h-[86.5%] max-[1440px]:min-h-[625px] max-[1280px]:left-[2.8%] max-[1280px]:top-[10.6%] max-[1280px]:h-[85.5%] max-[1280px]:min-h-[590px] max-[1024px]:left-[2.2%] max-[1024px]:top-[12.5%] max-[1024px]:h-[80%] max-[1024px]:min-h-[500px] max-[880px]:left-[1%] max-[880px]:top-[13%] max-[880px]:h-[78%] max-[880px]:min-h-[470px] max-[767px]:!left-1/2 max-[767px]:!right-auto max-[767px]:top-[clamp(335px,47svh,382px)] max-[767px]:z-[24] max-[767px]:h-[clamp(285px,42svh,355px)] max-[767px]:min-h-0 max-[767px]:!-translate-x-1/2 max-[767px]:![animation:none] max-[430px]:top-[clamp(370px,47svh,450px)] max-[390px]:top-[clamp(355px,47svh,382px)] max-[360px]:h-[clamp(270px,41svh,335px)]"
+          className="beauty-product-animate pointer-events-none absolute left-[3.2%] top-[5.2%] z-[50] h-[103.5%] min-h-[720px] origin-center max-[1600px]:left-[3%] max-[1600px]:top-[12.3%] max-[1600px]:h-[104%] max-[1600px]:min-h-[700px] max-[1440px]:left-[2.7%] max-[1440px]:top-[12.3%] max-[1440px]:h-[103%] max-[1440px]:min-h-[675px] max-[1280px]:left-[2.8%] max-[1280px]:top-[6.7%] max-[1280px]:h-[99.5%] max-[1280px]:min-h-[630px] max-[1024px]:left-[2.2%] max-[1024px]:top-[12.5%] max-[1024px]:h-[80%] max-[1024px]:min-h-[500px] max-[880px]:left-[1%] max-[880px]:top-[13%] max-[880px]:h-[78%] max-[880px]:min-h-[470px] max-[767px]:!left-1/2 max-[767px]:!right-auto max-[767px]:top-[clamp(335px,47svh,382px)] max-[767px]:z-[24] max-[767px]:h-[clamp(285px,42svh,355px)] max-[767px]:min-h-0 max-[767px]:!-translate-x-1/2 max-[767px]:![animation:none] max-[430px]:top-[clamp(370px,47svh,450px)] max-[390px]:top-[clamp(355px,47svh,382px)] max-[360px]:h-[clamp(270px,41svh,335px)]"
         >
           <img
             src={activeSlide.productImage}
             alt={activeSlide.productName}
-            className="block h-full w-auto max-w-none object-contain"
+            className="z-10 block h-full w-auto max-w-none object-contain"
           />
         </div>
 
         {/* ==================== Hero Text ==================== */}
         <div
           key={`copy-${activeSlide.id}`}
-          className="beauty-copy-animate absolute left-[35.1%] top-[20.3%] z-[24] w-[940px] max-[1600px]:left-[35.1%] max-[1600px]:top-[20.3%] max-[1600px]:w-[900px] max-[1440px]:left-[36.1%] max-[1440px]:top-[21%] max-[1440px]:w-[820px] max-[1280px]:left-[35.4%] max-[1280px]:top-[21.2%] max-[1280px]:w-[780px] max-[1024px]:left-[35.8%] max-[1024px]:top-[23.5%] max-[1024px]:w-[610px] max-[880px]:left-[36.5%] max-[880px]:top-[25%] max-[880px]:w-[520px] max-[767px]:!left-1/2 max-[767px]:!right-auto max-[767px]:top-[clamp(92px,13svh,106px)] max-[767px]:z-[25] max-[767px]:w-[min(calc(100%_-_52px),330px)] max-[767px]:!-translate-x-1/2 max-[767px]:text-center max-[767px]:![animation:none] max-[360px]:w-[min(calc(100%_-_42px),306px)]"
+          className="beauty-copy-animate absolute left-[35.1%] top-[20.3%] z-[24] w-[940px] max-[1600px]:left-[35.1%] max-[1600px]:top-[25.3%] max-[1600px]:w-[900px] max-[1440px]:left-[36.1%] max-[1440px]:top-[25%] max-[1440px]:w-[820px] max-[1280px]:left-[35.4%] max-[1280px]:top-[21.2%] max-[1280px]:w-[780px] max-[1024px]:left-[35.8%] max-[1024px]:top-[23.5%] max-[1024px]:w-[610px] max-[880px]:left-[36.5%] max-[880px]:top-[30%] max-[880px]:w-[520px] max-[767px]:!left-1/2 max-[767px]:!right-auto max-[767px]:top-[clamp(120px,13svh,106px)] max-[767px]:z-[25] max-[767px]:w-[min(calc(100%_-_52px),330px)] max-[767px]:!-translate-x-1/2 max-[767px]:text-center max-[767px]:![animation:none] max-[360px]:w-[min(calc(100%_-_42px),306px)]"
         >
-          <h1 className="mt-8 lg:mt-0 font-['Cormorant_Garamond',serif] text-[clamp(86px,7.1vw,122px)] font-light leading-[1.02] tracking-[-0.052em] text-[#f7faf4] max-[1440px]:text-[clamp(82px,7.2vw,104px)] max-[1280px]:text-[clamp(74px,7.45vw,96px)] max-[1024px]:text-[clamp(62px,7.6vw,78px)] max-[1024px]:leading-[1.04] max-[880px]:text-[clamp(54px,7.6vw,66px)] max-[767px]:mx-auto max-[767px]:text-[clamp(40px,12.9vw,50px)] max-[767px]:leading-[1.02] max-[767px]:tracking-[-0.052em]">
+          <h1 className="m-0 font-['Cormorant_Garamond',serif] text-[clamp(86px,7.1vw,122px)] font-light leading-[1.02] tracking-[-0.052em] text-[#f7faf4] max-[1440px]:text-[clamp(82px,7.2vw,104px)] max-[1280px]:text-[clamp(74px,7.45vw,96px)] max-[1024px]:text-[clamp(62px,7.6vw,78px)] max-[1024px]:leading-[1.04] max-[880px]:text-[clamp(54px,7.6vw,66px)] max-[767px]:mx-auto max-[767px]:text-[clamp(40px,12.9vw,50px)] max-[767px]:leading-[1.02] max-[767px]:tracking-[-0.052em]">
             {activeSlide.title.map((line) => (
               <span key={line} className="block">
                 {line}
