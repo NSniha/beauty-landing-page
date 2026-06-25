@@ -6,6 +6,8 @@ import thoughtCatalogLogo from "../../assets/images/thought-catalog.svg";
 import womensHealthLogo from "../../assets/images/womens-health.svg";
 import wwdLogo from "../../assets/images/wwd.svg";
 
+import "./AboutSection.css";
+
 const containerClass =
   "mx-auto w-[min(calc(100%_-_128px),1380px)] max-[1600px]:w-[min(calc(100%_-_112px),1320px)] max-[1440px]:w-[min(calc(100%_-_96px),1240px)] max-[1280px]:w-[min(calc(100%_-_96px),1180px)] max-[1024px]:w-[calc(100%_-_72px)] max-[880px]:w-[calc(100%_-_48px)] max-[767px]:w-[calc(100%_-_30px)] max-[360px]:w-[calc(100%_-_26px)]";
 
@@ -14,38 +16,35 @@ const brandLogos = [
     id: 1,
     name: "Vogue",
     image: vogueLogo,
-    className:
-      "h-[clamp(54px,5.2vw,88px)] max-[1180px]:h-[70px] max-[767px]:h-[54px]",
+    className: "h-[clamp(48px,5.05vw,82px)] w-auto",
   },
   {
     id: 2,
     name: "Forbes",
     image: forbesLogo,
-    className:
-      "h-[clamp(58px,5.4vw,94px)] max-[1180px]:h-[74px] max-[767px]:h-[58px]",
+    className: "h-[clamp(50px,5.2vw,86px)] w-auto",
   },
   {
     id: 3,
     name: "Thought Catalog",
     image: thoughtCatalogLogo,
-    className:
-      "h-[clamp(72px,6.1vw,108px)] max-[1180px]:h-[86px] max-[767px]:h-[70px]",
+    className: "h-[clamp(58px,5.35vw,94px)] w-auto",
   },
   {
     id: 4,
     name: "Women’s Health",
     image: womensHealthLogo,
-    className:
-      "h-[clamp(46px,4.1vw,74px)] max-[1180px]:h-[62px] max-[767px]:h-[48px]",
+    className: "h-[clamp(42px,4.25vw,70px)] w-auto",
   },
   {
     id: 5,
     name: "WWD",
     image: wwdLogo,
-    className:
-      "h-[clamp(72px,6.9vw,116px)] max-[1180px]:h-[90px] max-[767px]:h-[72px]",
+    className: "h-[clamp(66px,6.7vw,112px)] w-auto",
   },
 ];
+
+const marqueeLogos = [...brandLogos, ...brandLogos];
 
 const ArrowIcon = ({ className = "" }) => (
   <svg viewBox="0 0 116 32" aria-hidden="true" className={className}>
@@ -92,17 +91,17 @@ const AboutSection = () => {
     return () => observer.disconnect();
   }, []);
 
-  const fadeUpClass = isVisible
+  const leftAnimation = isVisible
+    ? "translate-x-0 opacity-100 blur-0"
+    : "-translate-x-[32px] opacity-0 blur-[8px]";
+
+  const rightAnimation = isVisible
+    ? "translate-x-0 opacity-100 blur-0"
+    : "translate-x-[32px] opacity-0 blur-[8px]";
+
+  const upAnimation = isVisible
     ? "translate-y-0 opacity-100 blur-0"
-    : "translate-y-[34px] opacity-0 blur-[8px]";
-
-  const fadeLeftClass = isVisible
-    ? "translate-x-0 opacity-100 blur-0"
-    : "-translate-x-[34px] opacity-0 blur-[8px]";
-
-  const fadeRightClass = isVisible
-    ? "translate-x-0 opacity-100 blur-0"
-    : "translate-x-[34px] opacity-0 blur-[8px]";
+    : "translate-y-[30px] opacity-0 blur-[8px]";
 
   return (
     <section
@@ -112,31 +111,31 @@ const AboutSection = () => {
     >
       {/* ==================== About Content ==================== */}
       <div
-        className={`${containerClass} grid grid-cols-[45.5%_1fr] gap-[clamp(72px,7.2vw,132px)] pb-[clamp(88px,6.55vw,124px)] pt-[clamp(92px,6.9vw,128px)] max-[1280px]:gap-[68px] max-[1024px]:grid-cols-1 max-[1024px]:gap-[42px] max-[1024px]:pb-[78px] max-[1024px]:pt-[76px] max-[767px]:gap-[30px] max-[767px]:pb-[58px] max-[767px]:pt-[56px]`}
+        className={`${containerClass} grid grid-cols-[45.85%_1fr] gap-[clamp(74px,7vw,128px)] pb-[clamp(88px,6.2vw,116px)] pt-[clamp(84px,6.35vw,118px)] max-[1280px]:gap-[68px] max-[1024px]:grid-cols-1 max-[1024px]:gap-[44px] max-[1024px]:pb-[78px] max-[1024px]:pt-[76px] max-[767px]:gap-[32px] max-[767px]:pb-[58px] max-[767px]:pt-[56px]`}
       >
         <div
-          className={`transition-all duration-[950ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${fadeLeftClass}`}
+          className={`transition-all duration-[950ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${leftAnimation}`}
         >
-          <p className="mb-[26px] mt-0 font-['Inter',sans-serif] text-[clamp(24px,1.9vw,33px)] font-normal leading-none tracking-[-0.055em] text-[#8fa58d] max-[767px]:mb-[18px] max-[767px]:text-[22px]">
+          <p className="mb-[26px] mt-0 font-['Inter',sans-serif] text-[clamp(24px,1.9vw,34px)] font-normal leading-none tracking-[-0.055em] text-[#8fa58d] max-[767px]:mb-[18px] max-[767px]:text-[22px]">
             About us
           </p>
 
-          <h2 className="m-0 max-w-[620px] font-['Cormorant_Garamond',serif] text-[clamp(60px,4.85vw,84px)] font-light leading-[1.08] tracking-[-0.06em] text-[#243f2a] max-[1440px]:text-[clamp(56px,5.05vw,76px)] max-[1024px]:max-w-[720px] max-[767px]:text-[clamp(42px,12vw,58px)]">
+          <h2 className="m-0 max-w-[610px] font-['Cormorant_Garamond',serif] text-[clamp(58px,4.9vw,84px)] font-light leading-[1.08] tracking-[-0.058em] text-[#243f2a] max-[1440px]:text-[clamp(54px,5vw,76px)] max-[1024px]:max-w-[720px] max-[767px]:text-[clamp(42px,12vw,58px)]">
             Velvety facial and skincare company
           </h2>
         </div>
 
         <div
-          className={`pt-[5px] transition-all delay-[120ms] duration-[950ms] ease-[cubic-bezier(0.22,1,0.36,1)] max-[1024px]:pt-0 ${fadeRightClass}`}
+          className={`pt-[4px] transition-all delay-[120ms] duration-[950ms] ease-[cubic-bezier(0.22,1,0.36,1)] max-[1024px]:pt-0 ${rightAnimation}`}
         >
-          <p className="m-0 max-w-[760px] font-['Inter',sans-serif] text-[clamp(20px,1.36vw,24px)] font-normal leading-[1.34] tracking-[-0.058em] text-[#4f744e] max-[1280px]:text-[21px] max-[767px]:text-[18px] max-[767px]:leading-[1.45]">
+          <p className="m-0 max-w-[730px] font-['Inter',sans-serif] text-[clamp(20px,1.42vw,24px)] font-normal leading-[1.34] tracking-[-0.058em] text-[#4f744e] max-[1280px]:text-[21px] max-[767px]:text-[18px] max-[767px]:leading-[1.46]">
             Velvety is an indigenous company that specializes in the manufacture
             and development of facial and skincare products using the medicinal
             properties of the traditional First Nations pharmacopoeia, with a
             concern for sustainable development.
           </p>
 
-          <p className="mb-0 mt-[36px] max-w-[800px] font-['Inter',sans-serif] text-[clamp(20px,1.36vw,24px)] font-normal leading-[1.34] tracking-[-0.058em] text-[#4f744e] max-[1280px]:text-[21px] max-[767px]:mt-[24px] max-[767px]:text-[18px] max-[767px]:leading-[1.45]">
+          <p className="mb-0 mt-[36px] max-w-[800px] font-['Inter',sans-serif] text-[clamp(20px,1.42vw,24px)] font-normal leading-[1.34] tracking-[-0.058em] text-[#4f744e] max-[1280px]:text-[21px] max-[767px]:mt-[24px] max-[767px]:text-[18px] max-[767px]:leading-[1.46]">
             The products offered, whose benefits have been scientifically
             confirmed, are 100% natural and allow you to take care of your body
             and mind: calming teas, energizing infusions, anti-inflammatory
@@ -156,37 +155,31 @@ const AboutSection = () => {
 
       {/* ==================== Brand Logos ==================== */}
       <div
-        className={`${containerClass} pb-[clamp(82px,6.45vw,122px)] pt-[clamp(82px,6.25vw,116px)] max-[1024px]:pb-[78px] max-[1024px]:pt-[72px] max-[767px]:pb-[58px] max-[767px]:pt-[52px]`}
+        className={`${containerClass} pb-[clamp(76px,6.1vw,108px)] pt-[clamp(82px,6.25vw,116px)] max-[1024px]:pb-[76px] max-[1024px]:pt-[72px] max-[767px]:pb-[58px] max-[767px]:pt-[52px]`}
       >
         <p
-          className={`mb-[clamp(50px,4.1vw,76px)] mt-0 font-['Inter',sans-serif] text-[clamp(24px,1.9vw,33px)] font-normal leading-none tracking-[-0.055em] text-[#8fa58d] transition-all delay-[170ms] duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] max-[767px]:mb-[34px] max-[767px]:text-[22px] ${fadeUpClass}`}
+          className={`mb-[clamp(48px,3.85vw,70px)] mt-0 font-['Inter',sans-serif] text-[clamp(24px,1.9vw,34px)] font-normal leading-none tracking-[-0.055em] text-[#8fa58d] transition-all delay-[160ms] duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] max-[767px]:mb-[34px] max-[767px]:text-[22px] ${upAnimation}`}
         >
           As seen in
         </p>
 
-        <div className="grid grid-cols-[1fr_1.03fr_1.02fr_1.22fr_0.84fr] items-center gap-[clamp(34px,4.15vw,76px)] max-[1180px]:grid-cols-3 max-[1180px]:gap-y-[44px] max-[767px]:grid-cols-2 max-[767px]:gap-x-[28px] max-[767px]:gap-y-[34px] max-[430px]:grid-cols-1">
-          {brandLogos.map((logo, index) => (
-            <div
-              key={logo.id}
-              className={`flex items-center max-[430px]:justify-center transition-all duration-[950ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                index === 4 ? "justify-end max-[1180px]:justify-start" : ""
-              } ${
-                isVisible
-                  ? "translate-y-0 opacity-100 blur-0"
-                  : "translate-y-[30px] opacity-0 blur-[8px]"
-              }`}
-              style={{
-                transitionDelay: isVisible ? `${0.22 + index * 0.08}s` : "0s",
-              }}
-            >
-              <img
-                src={logo.image}
-                alt={logo.name}
-                className={`${logo.className} block w-auto max-w-full select-none object-contain`}
-                draggable="false"
-              />
-            </div>
-          ))}
+        <div
+          className={`about-brand-marquee relative w-full overflow-hidden transition-all delay-[230ms] duration-[950ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${upAnimation}`}
+        >
+          <div className="about-brand-track flex w-max items-center gap-[clamp(74px,6.8vw,124px)] max-[1024px]:gap-[74px] max-[767px]:gap-[54px]">
+            {marqueeLogos.map((logo, index) => (
+              <div
+                key={`${logo.id}-${index}`}
+                className="about-brand-item flex min-w-max items-center justify-center"
+              >
+                <img
+                  src={logo.image}
+                  alt={logo.name}
+                  className={`block object-contain ${logo.className}`}
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -196,14 +189,10 @@ const AboutSection = () => {
         className="group block w-full bg-[#8fa58d] text-[#f7faf4] no-underline"
       >
         <div
-          className={`${containerClass} flex min-h-[clamp(104px,8.65vw,132px)] items-center justify-between gap-[30px] max-[767px]:min-h-[108px]`}
+          className={`${containerClass} flex min-h-[clamp(104px,8.55vw,132px)] items-center justify-between gap-[30px] max-[767px]:min-h-[108px]`}
         >
           <span
-            className={`font-['Cormorant_Garamond',serif] text-[clamp(32px,3.1vw,54px)] font-light leading-none tracking-[-0.062em] transition-all duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] max-[767px]:text-[clamp(29px,9.5vw,42px)] ${
-              isVisible
-                ? "translate-y-0 opacity-100 blur-0"
-                : "translate-y-[24px] opacity-0 blur-[8px]"
-            }`}
+            className={`font-['Cormorant_Garamond',serif] text-[clamp(32px,3.15vw,54px)] font-light leading-none tracking-[-0.058em] transition-all duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] max-[767px]:text-[clamp(29px,9.5vw,42px)] ${upAnimation}`}
           >
             Let&apos;s see the processing of our products
           </span>
