@@ -6,6 +6,7 @@ import AllProducts from "../AllProducts/AllProducts";
 import SkinDiagnosis from "../SkinDiagnosis/SkinDiagnosis";
 import Testimonials from "../Testimonials/Testimonials";
 import PerksSection from "../PerksSection/PerksSection";
+import Footer from "../../components/Footer/Footer";
 
 const Home = () => {
   return (
@@ -33,6 +34,9 @@ const Home = () => {
 
       {/* ==================== Perks Section ==================== */}
       <PerksSection />
+
+      {/* ==================== Footer ==================== */}
+      <Footer />
     </main>
   );
 };
