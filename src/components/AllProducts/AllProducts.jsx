@@ -9,7 +9,7 @@ const containerClass =
   "mx-auto w-[min(calc(100%_-_128px),1380px)] max-[1600px]:w-[min(calc(100%_-_112px),1320px)] max-[1440px]:w-[min(calc(100%_-_96px),1240px)] max-[1280px]:w-[min(calc(100%_-_96px),1180px)] max-[1024px]:w-[calc(100%_-_72px)] max-[880px]:w-[calc(100%_-_48px)] max-[767px]:w-[calc(100%_-_30px)] max-[360px]:w-[calc(100%_-_26px)]";
 
 const sectionLabelClass =
-  "mb-[24px] mt-0 font-['Inter',sans-serif] text-[30px] font-normal leading-none tracking-[-0.035em] text-[#8fa58d] max-[1280px]:text-[26px] max-[767px]:mb-[16px] max-[767px]:text-[20px]";
+  "mb-[25px] mt-0 font-['Inter',sans-serif] text-[clamp(22px,1.52vw,30px)] font-normal leading-none tracking-[-0.04em] text-[#8fa58d] transition-all duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] max-[1280px]:text-[25px] max-[767px]:mb-[16px] max-[767px]:text-[20px]";
 
 const sectionHeadingClass =
   "m-0 max-w-[520px] font-['Cormorant_Garamond',serif] text-[clamp(56px,4.2vw,82px)] font-light leading-[1.08] tracking-[-0.056em] text-[#243f2a] max-[1440px]:text-[clamp(52px,4.25vw,72px)] max-[1280px]:text-[clamp(48px,4.9vw,64px)] max-[767px]:text-[clamp(38px,11vw,54px)] max-[430px]:text-[40px]";
@@ -132,7 +132,7 @@ const CartIcon = () => (
       fill="currentColor"
     />
     <path
-      d="M18 21C18.5523 21 19 20.5523 19 20C19 19.4477 18.5523 19 18 19C17.4477 19 17 20.5523 17 20C17 20.5523 17.4477 21 18 21Z"
+      d="M18 21C18.5523 21 19 20.5523 19 20C19 19.4477 18.5523 19 18 19C17.4477 19 17 19.4477 17 20C17 20.5523 17.4477 21 18 21Z"
       fill="currentColor"
     />
   </svg>
@@ -200,11 +200,12 @@ const EmptyBoxIcon = () => (
   </svg>
 );
 
-const StarRating = ({ rating }) => (
+const StarRating = ({ rating, uniqueId }) => (
   <div className="flex items-center gap-[4px]">
     {[1, 2, 3, 4, 5].map((star) => {
       const isFull = star <= Math.floor(rating);
       const isHalf = !isFull && star - rating <= 0.5;
+      const gradientId = `allProductStar-${uniqueId}-${star}`;
 
       return (
         <svg
@@ -214,7 +215,7 @@ const StarRating = ({ rating }) => (
           className="h-[19px] w-[19px] text-[#2f6334] max-[767px]:h-[17px] max-[767px]:w-[17px]"
         >
           <defs>
-            <linearGradient id={`star-${rating}-${star}`}>
+            <linearGradient id={gradientId}>
               <stop offset={isHalf ? "50%" : "100%"} stopColor="currentColor" />
               <stop offset={isHalf ? "50%" : "100%"} stopColor="transparent" />
             </linearGradient>
@@ -222,7 +223,7 @@ const StarRating = ({ rating }) => (
 
           <path
             d="M10 1.4L12.64 6.75L18.55 7.61L14.28 11.77L15.29 17.65L10 14.87L4.71 17.65L5.72 11.77L1.45 7.61L7.36 6.75L10 1.4Z"
-            fill={isFull || isHalf ? `url(#star-${rating}-${star})` : "none"}
+            fill={isFull || isHalf ? `url(#${gradientId})` : "none"}
             stroke="currentColor"
             strokeWidth="1.1"
             opacity={isFull || isHalf ? 1 : 0.45}
@@ -234,6 +235,8 @@ const StarRating = ({ rating }) => (
 );
 
 const getStoredWishlistIds = () => {
+  if (typeof window === "undefined") return [];
+
   try {
     return JSON.parse(localStorage.getItem("beautyWishlistIds")) || [];
   } catch {
@@ -304,7 +307,8 @@ const AllProducts = () => {
     );
 
     const cartTotal = updatedCart.reduce(
-      (total, item) => total + Number(item.price || 0) * Number(item.quantity || 0),
+      (total, item) =>
+        total + Number(item.price || 0) * Number(item.quantity || 0),
       0
     );
 
@@ -369,15 +373,16 @@ const AllProducts = () => {
     );
   };
 
+  const labelAnimation = isVisible
+    ? "translate-y-0 opacity-100 blur-none"
+    : "translate-y-[24px] opacity-0 blur-[8px]";
+
   return (
     <section
       ref={sectionRef}
       id="all-products"
-      className="relative z-0 w-full overflow-hidden bg-[#f2f6ef]"
+      className="relative z-0 w-full overflow-hidden border-b border-[#8fa58d]/35 bg-[#f2f6ef]"
     >
-      {/* ==================== Top Border ==================== */}
-      <div className="h-px w-full bg-[#8fa58d]/35" />
-
       {/* ==================== Main Layout ==================== */}
       <div
         className={`${containerClass} grid grid-cols-[42.2%_1fr] gap-[clamp(58px,6.1vw,96px)] pb-[clamp(74px,5.65vw,96px)] pt-[clamp(82px,6.2vw,108px)] max-[1280px]:grid-cols-[43%_1fr] max-[1280px]:gap-[54px] max-[1024px]:grid-cols-1 max-[1024px]:gap-[58px] max-[1024px]:pb-[78px] max-[1024px]:pt-[76px] max-[767px]:gap-[42px] max-[767px]:pb-[58px] max-[767px]:pt-[56px]`}
@@ -390,7 +395,9 @@ const AllProducts = () => {
               : "-translate-x-[34px] opacity-0 blur-[8px]"
           }`}
         >
-          <p className={sectionLabelClass}>All Products</p>
+          <p className={`${sectionLabelClass} ${labelAnimation}`}>
+            All Products
+          </p>
 
           <h2 className={sectionHeadingClass}>
             Mild skincare &amp; facial routine
@@ -438,7 +445,9 @@ const AllProducts = () => {
                         : "translate-y-[34px] opacity-0 blur-[8px]"
                     }`}
                     style={{
-                      transitionDelay: isVisible ? `${0.16 + index * 0.09}s` : "0s",
+                      transitionDelay: isVisible
+                        ? `${0.16 + index * 0.09}s`
+                        : "0s",
                     }}
                   >
                     {/* ==================== Product Image ==================== */}
@@ -494,7 +503,10 @@ const AllProducts = () => {
                       </p>
 
                       <div className="mt-[19px] flex items-center gap-[12px]">
-                        <StarRating rating={product.rating} />
+                        <StarRating
+                          rating={product.rating}
+                          uniqueId={product.id}
+                        />
 
                         <span className="font-['Inter',sans-serif] text-[18px] font-normal leading-none tracking-[-0.035em] text-[#4f744e] max-[767px]:text-[16px]">
                           {product.rating.toFixed(1)}
@@ -533,9 +545,6 @@ const AllProducts = () => {
           )}
         </div>
       </div>
-
-      {/* ==================== Bottom Border ==================== */}
-      <div className="h-px w-full bg-[#8fa58d]/35" />
 
       {/* ==================== Quick View Modal ==================== */}
       <div
@@ -586,7 +595,10 @@ const AllProducts = () => {
               </p>
 
               <div className="mt-[20px] flex items-center gap-[12px]">
-                <StarRating rating={quickViewProduct.rating} />
+                <StarRating
+                  rating={quickViewProduct.rating}
+                  uniqueId={`quick-${quickViewProduct.id}`}
+                />
 
                 <span className="font-['Inter',sans-serif] text-[17px] text-[#4f744e]">
                   {quickViewProduct.rating.toFixed(1)}

@@ -4,6 +4,7 @@ import FeaturedProducts from "../FeaturedProducts/FeaturedProducts";
 import AboutSection from "../AboutSection/AboutSection";
 import AllProducts from "../AllProducts/AllProducts";
 import SkinDiagnosis from "../SkinDiagnosis/SkinDiagnosis";
+import Testimonials from "../Testimonials/Testimonials";
 
 const Home = () => {
   return (
@@ -25,6 +26,9 @@ const Home = () => {
 
       {/* ==================== Skin Diagnosis Section ==================== */}
       <SkinDiagnosis />
+
+      {/* ==================== Testimonials Section ==================== */}
+      <Testimonials />
     </main>
   );
 };

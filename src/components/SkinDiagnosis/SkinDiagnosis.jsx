@@ -6,10 +6,16 @@ const containerClass =
   "mx-auto w-[min(calc(100%_-_128px),1380px)] max-[1600px]:w-[min(calc(100%_-_112px),1320px)] max-[1440px]:w-[min(calc(100%_-_96px),1240px)] max-[1280px]:w-[min(calc(100%_-_96px),1180px)] max-[1024px]:w-[calc(100%_-_72px)] max-[880px]:w-[calc(100%_-_48px)] max-[767px]:w-[calc(100%_-_30px)] max-[360px]:w-[calc(100%_-_26px)]";
 
 const sectionLabelClass =
-  "mb-[24px] mt-0 font-['Inter',sans-serif] text-[30px] font-normal leading-none tracking-[-0.035em] text-[#8fa58d] max-[1280px]:text-[26px] max-[767px]:mb-[16px] max-[767px]:text-[20px]";
+  "mb-[25px] mt-0 font-['Inter',sans-serif] text-[clamp(22px,1.52vw,30px)] font-normal leading-none tracking-[-0.04em] text-[#8fa58d] transition-all duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] max-[1280px]:text-[25px] max-[767px]:mb-[16px] max-[767px]:text-[20px]";
 
 const sectionHeadingClass =
-  "m-0 font-['Cormorant_Garamond',serif] text-[clamp(58px,4.45vw,84px)] font-light leading-[1.08] tracking-[-0.056em] text-[#243f2a] max-[1440px]:text-[clamp(54px,4.6vw,74px)] max-[1280px]:text-[clamp(50px,4.65vw,64px)] max-[1024px]:text-[clamp(52px,6.2vw,68px)] max-[767px]:text-[clamp(38px,11vw,54px)] max-[430px]:text-[40px]";
+  "m-0 font-['Cormorant_Garamond',serif] text-[clamp(56px,4.2vw,82px)] font-light leading-[1.08] tracking-[-0.056em] text-[#243f2a] max-[1440px]:text-[clamp(52px,4.25vw,72px)] max-[1280px]:text-[clamp(48px,4.9vw,64px)] max-[1024px]:text-[clamp(52px,6.2vw,68px)] max-[767px]:text-[clamp(38px,11vw,54px)] max-[430px]:text-[40px]";
+
+const bodyTextClass =
+  "mb-0 mt-[32px] max-w-[700px] font-['Inter',sans-serif] text-[clamp(20px,1.42vw,24px)] font-normal leading-[1.34] tracking-[-0.058em] text-[#4f744e] max-[1280px]:mt-[26px] max-[1280px]:text-[21px] max-[1024px]:mx-auto max-[767px]:mt-[20px] max-[767px]:text-[18px] max-[767px]:leading-[1.46]";
+
+const buttonClass =
+  "group mt-[46px] inline-flex h-[64px] w-[306px] items-center justify-center gap-[20px] border border-[#243f2a] bg-transparent font-['Inter',sans-serif] text-[20px] font-normal leading-none tracking-[-0.045em] text-[#243f2a] no-underline transition duration-300 hover:bg-[#243f2a] hover:text-[#f7faf4] max-[1280px]:mt-[38px] max-[1280px]:h-[60px] max-[1280px]:w-[286px] max-[1280px]:text-[19px] max-[767px]:mt-[32px] max-[767px]:h-[54px] max-[767px]:w-[244px] max-[767px]:gap-[15px] max-[767px]:text-[16px]";
 
 const ArrowIcon = ({ className = "" }) => (
   <svg viewBox="0 0 64 24" aria-hidden="true" className={className}>
@@ -65,6 +71,10 @@ const SkinDiagnosis = () => {
     ? "translate-x-0 opacity-100 blur-0"
     : "translate-x-[34px] opacity-0 blur-[8px]";
 
+  const labelAnimation = isVisible
+    ? "translate-y-0 opacity-100 blur-none"
+    : "translate-y-[24px] opacity-0 blur-[8px]";
+
   return (
     <section
       ref={sectionRef}
@@ -88,9 +98,11 @@ const SkinDiagnosis = () => {
 
         {/* ==================== Right Content ==================== */}
         <div
-          className={`max-w-[760px] pb-[4px] transition-all delay-[120ms] duration-[950ms] ease-[cubic-bezier(0.22,1,0.36,1)] max-[1024px]:mx-auto max-[1024px]:max-w-[720px] max-[1024px]:pb-0 max-[1024px]:text-center ${rightAnimation}`}
+          className={`max-w-[790px] pb-[4px] transition-all delay-[120ms] duration-[950ms] ease-[cubic-bezier(0.22,1,0.36,1)] max-[1024px]:mx-auto max-[1024px]:max-w-[720px] max-[1024px]:pb-0 max-[1024px]:text-center ${rightAnimation}`}
         >
-          <p className={sectionLabelClass}>Try Our Service</p>
+          <p className={`${sectionLabelClass} ${labelAnimation}`}>
+            Try Our Service
+          </p>
 
           <h2 className={sectionHeadingClass}>
             <span className="block whitespace-nowrap max-[1024px]:whitespace-normal">
@@ -99,15 +111,12 @@ const SkinDiagnosis = () => {
             <span className="block">3 minutes</span>
           </h2>
 
-          <p className="mb-0 mt-[32px] max-w-[700px] font-['Inter',sans-serif] text-[clamp(20px,1.42vw,24px)] font-normal leading-[1.34] tracking-[-0.058em] text-[#4f744e] max-[1280px]:mt-[26px] max-[1280px]:text-[21px] max-[1024px]:mx-auto max-[767px]:mt-[20px] max-[767px]:text-[18px] max-[767px]:leading-[1.46]">
+          <p className={bodyTextClass}>
             Say hello to a more radiant, healthier you with personalized
             skincare that&apos;s as unique as you are.
           </p>
 
-          <a
-            href="#contact"
-            className="group mt-[46px] inline-flex h-[64px] w-[306px] items-center justify-center gap-[20px] border border-[#243f2a] bg-transparent font-['Inter',sans-serif] text-[20px] font-normal leading-none tracking-[-0.045em] text-[#243f2a] no-underline transition duration-300 hover:bg-[#243f2a] hover:text-[#f7faf4] max-[1280px]:mt-[38px] max-[1280px]:h-[60px] max-[1280px]:w-[286px] max-[1280px]:text-[19px] max-[767px]:mt-[32px] max-[767px]:h-[54px] max-[767px]:w-[244px] max-[767px]:gap-[15px] max-[767px]:text-[16px]"
-          >
+          <a href="#contact" className={buttonClass}>
             <span>Start my diagnosis</span>
 
             <ArrowIcon className="h-[18px] w-[34px] transition-transform duration-300 group-hover:translate-x-[6px] max-[767px]:h-[17px] max-[767px]:w-[30px]" />

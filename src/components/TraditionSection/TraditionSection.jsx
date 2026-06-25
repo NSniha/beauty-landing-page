@@ -70,7 +70,7 @@ const TraditionSection = () => {
     <section
       ref={sectionRef}
       id="about"
-      className="relative z-0 w-full overflow-hidden border-b border-[#8fa58d]/35 bg-[#f2f6ef]"
+      className="relative z-0 w-full overflow-visible border-b border-[#8fa58d]/35 bg-[#f2f6ef]"
     >
       {/* ==================== Section Background ==================== */}
       <div className="pointer-events-none absolute inset-0 z-0 grid grid-cols-[49.35%_50.65%] max-[1024px]:grid-cols-1">
@@ -103,8 +103,8 @@ const TraditionSection = () => {
         </div>
 
         {/* ==================== Right Features ==================== */}
-        <div className="relative flex min-h-[clamp(560px,37.9vw,690px)] items-center bg-[#e6eee2] max-[1280px]:min-h-[540px] max-[1024px]:left-1/2 max-[1024px]:min-h-0 max-[1024px]:w-screen max-[1024px]:-translate-x-1/2 max-[1024px]:bg-[#e6eee2]">
-          <div className="ml-[clamp(58px,4.75vw,96px)] w-[min(calc(100%_-_116px),720px)] py-[clamp(60px,4.7vw,86px)] max-[1440px]:ml-[clamp(52px,4.3vw,76px)] max-[1440px]:w-[min(calc(100%_-_100px),660px)] max-[1280px]:ml-[48px] max-[1280px]:w-[min(calc(100%_-_88px),610px)] max-[1280px]:py-[54px] max-[1024px]:mx-auto max-[1024px]:w-[calc(100%_-_72px)] max-[1024px]:py-[76px] max-[880px]:w-[calc(100%_-_48px)] max-[767px]:w-[calc(100%_-_30px)] max-[767px]:py-[58px] max-[430px]:py-[50px] max-[360px]:w-[calc(100%_-_26px)]">
+        <div className="relative flex min-h-[clamp(560px,37.9vw,690px)] items-center bg-[#e6eee2] max-[1280px]:min-h-[540px] max-[1024px]:min-h-0 max-[1024px]:bg-[#e6eee2]">
+          <div className="ml-[clamp(58px,4.75vw,96px)] w-[min(calc(100%_-_116px),720px)] py-[clamp(60px,4.7vw,86px)] max-[1440px]:ml-[clamp(52px,4.3vw,76px)] max-[1440px]:w-[min(calc(100%_-_100px),660px)] max-[1280px]:ml-[48px] max-[1280px]:w-[min(calc(100%_-_88px),610px)] max-[1280px]:py-[54px] max-[1024px]:mx-auto max-[1024px]:w-full max-[1024px]:py-[76px] max-[767px]:py-[58px] max-[430px]:py-[50px]">
             {features.map((feature, index) => (
               <article
                 key={feature.id}

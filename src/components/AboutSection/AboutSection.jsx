@@ -12,7 +12,7 @@ const containerClass =
   "mx-auto w-[min(calc(100%_-_128px),1380px)] max-[1600px]:w-[min(calc(100%_-_112px),1320px)] max-[1440px]:w-[min(calc(100%_-_96px),1240px)] max-[1280px]:w-[min(calc(100%_-_96px),1180px)] max-[1024px]:w-[calc(100%_-_72px)] max-[880px]:w-[calc(100%_-_48px)] max-[767px]:w-[calc(100%_-_30px)] max-[360px]:w-[calc(100%_-_26px)]";
 
 const sectionLabelClass =
-  "mb-[24px] mt-0 font-['Inter',sans-serif] text-[30px] font-normal leading-none tracking-[-0.035em] text-[#8fa58d] max-[1280px]:text-[26px] max-[767px]:mb-[16px] max-[767px]:text-[20px]";
+  "mb-[25px] mt-0 font-['Inter',sans-serif] text-[clamp(22px,1.52vw,30px)] font-normal leading-none tracking-[-0.04em] text-[#8fa58d] transition-all duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] max-[1280px]:text-[25px] max-[767px]:mb-[16px] max-[767px]:text-[20px]";
 
 const sectionHeadingClass =
   "m-0 font-['Cormorant_Garamond',serif] text-[clamp(56px,4.2vw,82px)] font-light leading-[1.08] tracking-[-0.056em] text-[#243f2a] max-[1440px]:text-[clamp(50px,4.35vw,62px)] max-[1280px]:text-[clamp(48px,4.25vw,58px)] max-[1024px]:text-[clamp(52px,6.2vw,68px)] max-[767px]:text-[clamp(38px,11vw,54px)] max-[430px]:text-[40px]";
@@ -112,6 +112,10 @@ const AboutSection = () => {
     ? "translate-y-0 opacity-100 blur-0"
     : "translate-y-[30px] opacity-0 blur-[8px]";
 
+  const labelAnimation = isVisible
+    ? "translate-y-0 opacity-100 blur-none"
+    : "translate-y-[24px] opacity-0 blur-[8px]";
+
   return (
     <section
       ref={sectionRef}
@@ -125,7 +129,7 @@ const AboutSection = () => {
         <div
           className={`max-w-[720px] transition-all duration-[950ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${leftAnimation}`}
         >
-          <p className={sectionLabelClass}>About us</p>
+          <p className={`${sectionLabelClass} ${labelAnimation}`}>About us</p>
 
           <h2 className={sectionHeadingClass}>
             <span className="block whitespace-nowrap max-[767px]:whitespace-normal">
@@ -147,7 +151,9 @@ const AboutSection = () => {
             concern for sustainable development.
           </p>
 
-          <p className={`mb-0 mt-[36px] max-w-[800px] max-[767px]:mt-[24px] ${bodyTextClass}`}>
+          <p
+            className={`mb-0 mt-[36px] max-w-[800px] max-[767px]:mt-[24px] ${bodyTextClass}`}
+          >
             The products offered, whose benefits have been scientifically
             confirmed, are 100% natural and allow you to take care of your body
             and mind: calming teas, energizing infusions, anti-inflammatory
@@ -165,14 +171,10 @@ const AboutSection = () => {
       <div
         className={`${containerClass} pb-[clamp(76px,6.1vw,108px)] pt-[clamp(82px,6.25vw,116px)] max-[1024px]:pb-[76px] max-[1024px]:pt-[72px] max-[767px]:pb-[58px] max-[767px]:pt-[52px]`}
       >
-        <p
-          className={`mb-[clamp(48px,3.85vw,70px)] mt-0 font-['Inter',sans-serif] text-[30px] font-normal leading-none tracking-[-0.035em] text-[#8fa58d] transition-all delay-[160ms] duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] max-[1280px]:text-[26px] max-[767px]:mb-[34px] max-[767px]:text-[20px] ${upAnimation}`}
-        >
-          As seen in
-        </p>
+        <p className={`${sectionLabelClass} ${labelAnimation}`}>As seen in</p>
 
         <div
-          className={`about-brand-marquee relative w-full overflow-hidden transition-all delay-[230ms] duration-[950ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${upAnimation}`}
+          className={`about-brand-marquee relative mt-[clamp(24px,2.7vw,45px)] w-full overflow-hidden transition-all delay-[230ms] duration-[950ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${upAnimation}`}
         >
           <div className="about-brand-track flex w-max items-center gap-[clamp(74px,6.8vw,124px)] max-[1024px]:gap-[74px] max-[767px]:gap-[54px]">
             {marqueeLogos.map((logo, index) => (
