@@ -5,6 +5,7 @@ import AboutSection from "../AboutSection/AboutSection";
 import AllProducts from "../AllProducts/AllProducts";
 import SkinDiagnosis from "../SkinDiagnosis/SkinDiagnosis";
 import Testimonials from "../Testimonials/Testimonials";
+import PerksSection from "../PerksSection/PerksSection";
 
 const Home = () => {
   return (
@@ -29,6 +30,9 @@ const Home = () => {
 
       {/* ==================== Testimonials Section ==================== */}
       <Testimonials />
+
+      {/* ==================== Perks Section ==================== */}
+      <PerksSection />
     </main>
   );
 };
