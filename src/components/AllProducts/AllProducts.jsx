@@ -8,6 +8,15 @@ import lightcoolImage from "../../assets/images/all-products/all-lightcool.png";
 const containerClass =
   "mx-auto w-[min(calc(100%_-_128px),1380px)] max-[1600px]:w-[min(calc(100%_-_112px),1320px)] max-[1440px]:w-[min(calc(100%_-_96px),1240px)] max-[1280px]:w-[min(calc(100%_-_96px),1180px)] max-[1024px]:w-[calc(100%_-_72px)] max-[880px]:w-[calc(100%_-_48px)] max-[767px]:w-[calc(100%_-_30px)] max-[360px]:w-[calc(100%_-_26px)]";
 
+const sectionLabelClass =
+  "mb-[24px] mt-0 font-['Inter',sans-serif] text-[30px] font-normal leading-none tracking-[-0.035em] text-[#8fa58d] max-[1280px]:text-[26px] max-[767px]:mb-[16px] max-[767px]:text-[20px]";
+
+const sectionHeadingClass =
+  "m-0 max-w-[520px] font-['Cormorant_Garamond',serif] text-[clamp(56px,4.2vw,82px)] font-light leading-[1.08] tracking-[-0.056em] text-[#243f2a] max-[1440px]:text-[clamp(52px,4.25vw,72px)] max-[1280px]:text-[clamp(48px,4.9vw,64px)] max-[767px]:text-[clamp(38px,11vw,54px)] max-[430px]:text-[40px]";
+
+const shopButtonClass =
+  "group mx-auto mt-[42px] flex h-[64px] w-[206px] items-center justify-center gap-[20px] border border-[#243f2a] bg-transparent font-['Inter',sans-serif] text-[20px] font-normal leading-none tracking-[-0.045em] text-[#243f2a] no-underline transition duration-300 hover:bg-[#243f2a] hover:text-[#f7faf4] max-[1280px]:mt-[38px] max-[1280px]:h-[60px] max-[1280px]:w-[190px] max-[1280px]:text-[19px] max-[767px]:mt-[34px] max-[767px]:h-[54px] max-[767px]:w-[160px] max-[767px]:gap-[14px] max-[767px]:text-[16px]";
+
 const tabs = [
   { id: "all-needs", label: "All needs" },
   { id: "protect", label: "Protect" },
@@ -123,7 +132,7 @@ const CartIcon = () => (
       fill="currentColor"
     />
     <path
-      d="M18 21C18.5523 21 19 20.5523 19 20C19 19.4477 18.5523 19 18 19C17.4477 19 17 19.4477 17 20C17 20.5523 17.4477 21 18 21Z"
+      d="M18 21C18.5523 21 19 20.5523 19 20C19 19.4477 18.5523 19 18 19C17.4477 19 17 20.5523 17 20C17 20.5523 17.4477 21 18 21Z"
       fill="currentColor"
     />
   </svg>
@@ -364,11 +373,14 @@ const AllProducts = () => {
     <section
       ref={sectionRef}
       id="all-products"
-      className="relative w-full overflow-hidden border-y border-[#8fa58d]/35 bg-[#f2f6ef]"
+      className="relative z-0 w-full overflow-hidden bg-[#f2f6ef]"
     >
+      {/* ==================== Top Border ==================== */}
+      <div className="h-px w-full bg-[#8fa58d]/35" />
+
       {/* ==================== Main Layout ==================== */}
       <div
-        className={`${containerClass} grid min-h-[clamp(900px,70vw,1120px)] grid-cols-[42.2%_1fr] gap-[clamp(58px,6.1vw,96px)] pb-[clamp(72px,6vw,98px)] pt-[clamp(82px,6.6vw,112px)] max-[1280px]:grid-cols-[43%_1fr] max-[1280px]:gap-[54px] max-[1024px]:min-h-0 max-[1024px]:grid-cols-1 max-[1024px]:gap-[58px] max-[1024px]:pb-[78px] max-[1024px]:pt-[76px] max-[767px]:gap-[42px] max-[767px]:pb-[58px] max-[767px]:pt-[56px]`}
+        className={`${containerClass} grid grid-cols-[42.2%_1fr] gap-[clamp(58px,6.1vw,96px)] pb-[clamp(74px,5.65vw,96px)] pt-[clamp(82px,6.2vw,108px)] max-[1280px]:grid-cols-[43%_1fr] max-[1280px]:gap-[54px] max-[1024px]:grid-cols-1 max-[1024px]:gap-[58px] max-[1024px]:pb-[78px] max-[1024px]:pt-[76px] max-[767px]:gap-[42px] max-[767px]:pb-[58px] max-[767px]:pt-[56px]`}
       >
         {/* ==================== Left Content ==================== */}
         <div
@@ -378,11 +390,9 @@ const AllProducts = () => {
               : "-translate-x-[34px] opacity-0 blur-[8px]"
           }`}
         >
-          <p className="mb-[24px] mt-0 font-['Inter',sans-serif] text-[clamp(22px,1.75vw,30px)] font-normal leading-none tracking-[-0.055em] text-[#8fa58d] max-[767px]:mb-[18px] max-[767px]:text-[21px]">
-            All Products
-          </p>
+          <p className={sectionLabelClass}>All Products</p>
 
-          <h2 className="m-0 max-w-[520px] font-['Cormorant_Garamond',serif] text-[clamp(54px,4.45vw,78px)] font-light leading-[1.12] tracking-[-0.058em] text-[#243f2a] max-[1280px]:text-[clamp(50px,4.75vw,68px)] max-[767px]:text-[clamp(42px,12vw,58px)]">
+          <h2 className={sectionHeadingClass}>
             Mild skincare &amp; facial routine
           </h2>
 
@@ -495,13 +505,10 @@ const AllProducts = () => {
                 ))}
               </div>
 
-              <a
-                href="#shop"
-                className="group mx-auto mt-[42px] flex h-[52px] w-[170px] items-center justify-center gap-[14px] border border-[#243f2a] bg-transparent font-['Inter',sans-serif] text-[15px] font-normal leading-none text-[#243f2a] no-underline transition duration-300 hover:bg-[#243f2a] hover:text-[#f7faf4] max-[767px]:mt-[34px]"
-              >
+              <a href="#shop" className={shopButtonClass}>
                 <span>Shop now</span>
 
-                <ArrowIcon className="h-[18px] w-[28px] transition-transform duration-300 group-hover:translate-x-[5px]" />
+                <ArrowIcon className="h-[18px] w-[34px] transition-transform duration-300 group-hover:translate-x-[6px] max-[767px]:h-[17px] max-[767px]:w-[30px]" />
               </a>
             </>
           ) : (
@@ -526,6 +533,9 @@ const AllProducts = () => {
           )}
         </div>
       </div>
+
+      {/* ==================== Bottom Border ==================== */}
+      <div className="h-px w-full bg-[#8fa58d]/35" />
 
       {/* ==================== Quick View Modal ==================== */}
       <div
@@ -592,7 +602,7 @@ const AllProducts = () => {
                 <button
                   type="button"
                   onClick={() => addToCart(quickViewProduct)}
-                  className="h-[50px] flex-1 cursor-pointer border-0 bg-[#243f2a] font-['Inter',sans-serif] text-[13px] font-medium uppercase tracking-[0.14em] text-white transition hover:bg-[#1a2f1f]"
+                  className="h-[50px] flex-1 cursor-pointer border-0 bg-[#243f2a] font-['Inter',sans-serif] text-[14px] font-medium uppercase tracking-[0.14em] text-white transition hover:bg-[#1a2f1f]"
                 >
                   Add to cart
                 </button>
@@ -600,7 +610,7 @@ const AllProducts = () => {
                 <button
                   type="button"
                   onClick={() => toggleWishlist(quickViewProduct)}
-                  className="h-[50px] flex-1 cursor-pointer border border-[#8fa58d]/45 bg-transparent font-['Inter',sans-serif] text-[13px] font-medium uppercase tracking-[0.14em] text-[#243f2a] transition hover:bg-[#e6eee2]"
+                  className="h-[50px] flex-1 cursor-pointer border border-[#8fa58d]/45 bg-transparent font-['Inter',sans-serif] text-[14px] font-medium uppercase tracking-[0.14em] text-[#243f2a] transition hover:bg-[#e6eee2]"
                 >
                   Wishlist
                 </button>
