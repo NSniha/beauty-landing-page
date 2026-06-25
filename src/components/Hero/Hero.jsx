@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import heroBottle from "../../assets/images/hero/hero-bottle.png";
 import heroBottleTwo from "../../assets/images/hero/hero-bottle-2.png";
@@ -36,6 +36,64 @@ const desktopLinkClass =
 
 const mobileMenuLinkClass =
   "font-['Inter',sans-serif] text-[17px] font-normal uppercase tracking-[0.08em] text-[#233b25] no-underline";
+
+const getStoredCartSummary = () => {
+  if (typeof window === "undefined") {
+    return {
+      items: [],
+      count: 0,
+      total: 0,
+    };
+  }
+
+  try {
+    const items = JSON.parse(window.localStorage.getItem("beautyCartItems")) || [];
+
+    const count = items.reduce(
+      (total, item) => total + Number(item.quantity || 0),
+      0
+    );
+
+    const total = items.reduce(
+      (sum, item) => sum + Number(item.price || 0) * Number(item.quantity || 0),
+      0
+    );
+
+    return {
+      items,
+      count,
+      total,
+    };
+  } catch {
+    return {
+      items: [],
+      count: 0,
+      total: 0,
+    };
+  }
+};
+
+const saveCartSummary = (items) => {
+  const count = items.reduce(
+    (total, item) => total + Number(item.quantity || 0),
+    0
+  );
+
+  const total = items.reduce(
+    (sum, item) => sum + Number(item.price || 0) * Number(item.quantity || 0),
+    0
+  );
+
+  localStorage.setItem("beautyCartItems", JSON.stringify(items));
+  localStorage.setItem("beautyCartCount", String(count));
+  localStorage.setItem("beautyCartTotal", String(total));
+
+  return {
+    items,
+    count,
+    total,
+  };
+};
 
 const ArrowIcon = ({ className = "", strokeWidth = 1.45 }) => (
   <svg viewBox="0 0 64 24" aria-hidden="true" className={className}>
@@ -116,9 +174,39 @@ const ChevronIcon = ({ className = "" }) => (
   </svg>
 );
 
+const StarIcon = ({ isActive = true }) => (
+  <svg
+    viewBox="0 0 20 20"
+    aria-hidden="true"
+    className={`h-[12px] w-[12px] ${
+      isActive ? "text-[#243f2a]" : "text-[#8fa58d]/30"
+    }`}
+  >
+    <path
+      d="M10 1.4L12.64 6.75L18.55 7.61L14.28 11.77L15.29 17.65L10 14.87L4.71 17.65L5.72 11.77L1.45 7.61L7.36 6.75L10 1.4Z"
+      fill="currentColor"
+    />
+  </svg>
+);
+
 const Hero = () => {
+  const initialCart = getStoredCartSummary();
+
   const [activeDot, setActiveDot] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [cartOpen, setCartOpen] = useState(false);
+  const [cartItems, setCartItems] = useState(initialCart.items);
+  const [cartCount, setCartCount] = useState(initialCart.count);
+  const [cartTotal, setCartTotal] = useState(initialCart.total);
+  const [toast, setToast] = useState({
+    isOpen: false,
+    productName: "",
+    productImage: "",
+    productRating: 5,
+    productPrice: 0,
+  });
+
+  const toastTimerRef = useRef(null);
 
   const activeSlide = heroSlides[activeDot];
 
@@ -130,6 +218,96 @@ const Hero = () => {
     setActiveDot((prev) => (prev === 0 ? heroSlides.length - 1 : prev - 1));
   };
 
+  const syncCartState = (summary = getStoredCartSummary()) => {
+    setCartItems(summary.items);
+    setCartCount(summary.count);
+    setCartTotal(summary.total);
+  };
+
+  const showCartToast = (product = {}) => {
+    setToast({
+      isOpen: true,
+      productName: product.name || product.productName || "Product",
+      productImage: product.image || product.productImage || "",
+      productRating: Number(product.rating || product.productRating || 5),
+      productPrice: Number(product.price || product.productPrice || 0),
+    });
+
+    if (toastTimerRef.current) {
+      clearTimeout(toastTimerRef.current);
+    }
+
+    toastTimerRef.current = setTimeout(() => {
+      setToast((prev) => ({
+        ...prev,
+        isOpen: false,
+      }));
+    }, 2600);
+  };
+
+  const openCartPopup = () => {
+    syncCartState();
+    setMenuOpen(false);
+    setCartOpen(true);
+  };
+
+  const closeCartPopup = () => {
+    setCartOpen(false);
+  };
+
+  const updateCartItems = (nextItems) => {
+    const summary = saveCartSummary(nextItems);
+
+    syncCartState(summary);
+
+    window.dispatchEvent(
+      new CustomEvent("beauty-cart-updated", {
+        detail: {
+          ...summary,
+          silent: true,
+        },
+      })
+    );
+  };
+
+  const increaseQuantity = (productId) => {
+    const nextItems = cartItems.map((item) =>
+      item.id === productId
+        ? {
+            ...item,
+            quantity: Number(item.quantity || 0) + 1,
+          }
+        : item
+    );
+
+    updateCartItems(nextItems);
+  };
+
+  const decreaseQuantity = (productId) => {
+    const nextItems = cartItems
+      .map((item) =>
+        item.id === productId
+          ? {
+              ...item,
+              quantity: Math.max(Number(item.quantity || 0) - 1, 0),
+            }
+          : item
+      )
+      .filter((item) => item.quantity > 0);
+
+    updateCartItems(nextItems);
+  };
+
+  const removeCartItem = (productId) => {
+    const nextItems = cartItems.filter((item) => item.id !== productId);
+
+    updateCartItems(nextItems);
+  };
+
+  const clearCart = () => {
+    updateCartItems([]);
+  };
+
   useEffect(() => {
     const autoSlide = setInterval(() => {
       setActiveDot((prev) => (prev + 1) % heroSlides.length);
@@ -138,10 +316,51 @@ const Hero = () => {
     return () => clearInterval(autoSlide);
   }, []);
 
+  useEffect(() => {
+    const handleCartUpdated = (event) => {
+      const summary = getStoredCartSummary();
+
+      syncCartState(summary);
+
+      if (event.detail?.silent) return;
+
+      const addedProduct =
+        event.detail?.product ||
+        event.detail?.addedItem ||
+        event.detail?.item ||
+        event.detail?.items?.[event.detail.items.length - 1] ||
+        {};
+
+      showCartToast(addedProduct);
+    };
+
+    const handleStorageChange = (event) => {
+      if (
+        event.key === "beautyCartItems" ||
+        event.key === "beautyCartCount" ||
+        event.key === "beautyCartTotal"
+      ) {
+        syncCartState();
+      }
+    };
+
+    window.addEventListener("beauty-cart-updated", handleCartUpdated);
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("beauty-cart-updated", handleCartUpdated);
+      window.removeEventListener("storage", handleStorageChange);
+
+      if (toastTimerRef.current) {
+        clearTimeout(toastTimerRef.current);
+      }
+    };
+  }, []);
+
   return (
     <section
       id="home"
-      className="relative isolate z-20 h-[clamp(650px,50.78vw,1040px)] min-h-[650px] w-full overflow-visible bg-[#f2f6ef] max-[1024px]:h-[760px] max-[880px]:h-[700px] max-[767px]:h-[100svh] max-[767px]:min-h-[720px] max-[767px]:overflow-hidden max-[767px]:bg-[#07100b]"
+      className="relative isolate z-20 h-[clamp(650px,50.78vw,750px)] min-h-[650px] w-full overflow-visible bg-[#f2f6ef] max-[1024px]:h-[760px] max-[880px]:h-[700px] max-[767px]:h-[100svh] max-[767px]:min-h-[720px] max-[767px]:overflow-hidden max-[767px]:bg-[#07100b]"
     >
       {/* ==================== Hero Background ==================== */}
       <div className="absolute inset-0 z-[1] h-full">
@@ -167,6 +386,236 @@ const Hero = () => {
           <span className="absolute inset-0 bg-black/[0.18]" />
         </div>
       </div>
+
+      {/* ==================== Add To Cart Toast ==================== */}
+      <div
+        className={`fixed bottom-[24px] left-[24px] z-[130] w-[min(calc(100%_-_32px),345px)] overflow-hidden border border-[#8fa58d]/35 bg-[#f7faf4]/95 shadow-[0_18px_46px_rgba(12,35,17,0.18)] backdrop-blur-md transition-all duration-500 max-[767px]:bottom-[16px] max-[767px]:left-[16px] max-[767px]:w-[min(calc(100%_-_32px),320px)] ${
+          toast.isOpen
+            ? "pointer-events-auto translate-y-0 opacity-100"
+            : "pointer-events-none translate-y-5 opacity-0"
+        }`}
+        role="status"
+        aria-live="polite"
+      >
+        <div className="grid grid-cols-[68px_1fr_70px] items-center gap-[12px] px-[14px] py-[12px] max-[767px]:grid-cols-[62px_1fr_62px] max-[767px]:gap-[10px]">
+          <div className="flex h-[68px] w-[68px] items-center justify-center bg-[#e6eee2] max-[767px]:h-[62px] max-[767px]:w-[62px]">
+            {toast.productImage ? (
+              <img
+                src={toast.productImage}
+                alt={toast.productName}
+                className="block h-[58px] w-auto object-contain max-[767px]:h-[52px]"
+              />
+            ) : (
+              <span className="font-['Cormorant_Garamond',serif] text-[28px] text-[#8fa58d]">
+                V
+              </span>
+            )}
+          </div>
+
+          <div className="min-w-0">
+            <p className="mb-[5px] mt-0 font-['Inter',sans-serif] text-[10px] font-medium uppercase leading-none tracking-[0.18em] text-[#8fa58d]">
+              Added to cart
+            </p>
+
+            <h3 className="m-0 truncate font-['Inter',sans-serif] text-[16px] font-normal uppercase leading-none tracking-[-0.035em] text-[#243f2a]">
+              {toast.productName}
+            </h3>
+
+            <div className="mt-[8px] flex items-center gap-[8px]">
+              <div className="flex items-center gap-[2px]">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <StarIcon
+                    key={star}
+                    isActive={star <= Math.floor(toast.productRating)}
+                  />
+                ))}
+              </div>
+
+              <span className="font-['Inter',sans-serif] text-[12px] font-normal leading-none text-[#5c7a5d]">
+                {toast.productRating.toFixed(1)}
+              </span>
+            </div>
+          </div>
+
+          <div className="flex h-full items-center justify-end border-l border-[#8fa58d]/20 pl-[12px]">
+            {toast.productPrice > 0 && (
+              <span className="font-['Inter',sans-serif] text-[22px] font-bold leading-none tracking-[-0.05em] text-[#243f2a] max-[767px]:text-[20px]">
+                ${toast.productPrice}
+              </span>
+            )}
+          </div>
+        </div>
+
+        <div
+          key={toast.productName + String(toast.isOpen)}
+          className="absolute bottom-0 left-0 h-[2px] w-full origin-left bg-[#243f2a]"
+          style={{
+            animation: toast.isOpen
+              ? "beautyCartToastLine 2600ms linear forwards"
+              : "none",
+          }}
+        />
+      </div>
+
+      {/* ==================== Cart Overlay ==================== */}
+      <div
+        className={`fixed inset-0 z-[115] bg-black/35 backdrop-blur-[2px] transition-all duration-300 ${
+          cartOpen ? "visible opacity-100" : "invisible opacity-0"
+        }`}
+        onClick={closeCartPopup}
+      />
+
+      {/* ==================== Cart Details Popup ==================== */}
+      <aside
+        id="cart"
+        className={`fixed right-0 top-0 z-[125] flex h-[100dvh] w-[min(calc(100%_-_24px),390px)] flex-col overflow-hidden border-l border-[#8fa58d]/35 bg-[#f7faf4] shadow-[-22px_0_80px_rgba(12,35,17,0.22)] transition-all duration-500 max-[767px]:w-[min(calc(100%_-_18px),360px)] ${
+          cartOpen
+            ? "visible translate-x-0 opacity-100"
+            : "invisible translate-x-full opacity-0"
+        }`}
+        aria-hidden={!cartOpen}
+      >
+        <div className="flex items-start justify-between gap-[16px] border-b border-[#8fa58d]/25 px-[20px] py-[20px]">
+          <div>
+            <p className="mb-[6px] mt-0 font-['Inter',sans-serif] text-[11px] font-medium uppercase tracking-[0.22em] text-[#8fa58d]">
+              Shopping cart
+            </p>
+
+            <h2 className="m-0 font-['Cormorant_Garamond',serif] text-[34px] font-light leading-none tracking-[-0.045em] text-[#243f2a]">
+              Your items
+            </h2>
+          </div>
+
+          <button
+            type="button"
+            onClick={closeCartPopup}
+            className="flex h-[36px] w-[36px] shrink-0 cursor-pointer items-center justify-center border border-[#8fa58d]/35 bg-transparent p-0 text-[#243f2a] transition hover:bg-[#e6eee2]"
+            aria-label="Close cart"
+          >
+            <CloseIcon className="h-[17px] w-[17px]" />
+          </button>
+        </div>
+
+        <div className="min-h-0 flex-1 overflow-y-auto px-[20px] py-[20px]">
+          {cartItems.length === 0 ? (
+            <div className="flex min-h-full flex-col items-center justify-center py-[34px] text-center">
+              <p className="m-0 font-['Cormorant_Garamond',serif] text-[31px] font-light leading-[1.08] tracking-[-0.04em] text-[#243f2a]">
+                Your cart is empty
+              </p>
+
+              <p className="mx-auto mb-0 mt-[10px] max-w-[260px] font-['Inter',sans-serif] text-[14px] leading-[1.55] text-[#5c7a5d]">
+                Add your favorite skincare products and they will appear here.
+              </p>
+
+              <button
+                type="button"
+                onClick={closeCartPopup}
+                className="mt-[22px] h-[46px] cursor-pointer border-0 bg-[#243f2a] px-[22px] font-['Inter',sans-serif] text-[13px] font-medium uppercase tracking-[0.12em] text-white"
+              >
+                Continue shopping
+              </button>
+            </div>
+          ) : (
+            <div className="flex flex-col gap-[16px]">
+              {cartItems.map((item) => (
+                <article
+                  key={item.id}
+                  className="grid grid-cols-[76px_1fr] gap-[14px] border-b border-[#8fa58d]/20 pb-[16px]"
+                >
+                  <div className="flex h-[76px] w-[76px] items-center justify-center bg-[#e6eee2]">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="block h-[66px] w-auto object-contain"
+                    />
+                  </div>
+
+                  <div>
+                    <div className="flex items-start justify-between gap-[10px]">
+                      <div>
+                        <h3 className="m-0 font-['Inter',sans-serif] text-[16px] font-normal uppercase leading-none tracking-[-0.035em] text-[#243f2a]">
+                          {item.name}
+                        </h3>
+
+                        <p className="mb-0 mt-[7px] font-['Inter',sans-serif] text-[14px] font-medium text-[#5c7a5d]">
+                          ${Number(item.price).toFixed(2)}
+                        </p>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={() => removeCartItem(item.id)}
+                        className="cursor-pointer border-0 bg-transparent p-0 font-['Inter',sans-serif] text-[11px] uppercase tracking-[0.1em] text-[#8fa58d] transition hover:text-[#243f2a]"
+                      >
+                        Remove
+                      </button>
+                    </div>
+
+                    <div className="mt-[14px] flex items-center justify-between gap-[12px]">
+                      <div className="flex h-[32px] items-center border border-[#8fa58d]/35">
+                        <button
+                          type="button"
+                          onClick={() => decreaseQuantity(item.id)}
+                          className="h-full w-[32px] cursor-pointer border-0 bg-transparent text-[17px] text-[#243f2a]"
+                          aria-label={`Decrease ${item.name} quantity`}
+                        >
+                          −
+                        </button>
+
+                        <span className="min-w-[31px] text-center font-['Inter',sans-serif] text-[13px] text-[#243f2a]">
+                          {item.quantity}
+                        </span>
+
+                        <button
+                          type="button"
+                          onClick={() => increaseQuantity(item.id)}
+                          className="h-full w-[32px] cursor-pointer border-0 bg-transparent text-[17px] text-[#243f2a]"
+                          aria-label={`Increase ${item.name} quantity`}
+                        >
+                          +
+                        </button>
+                      </div>
+
+                      <p className="m-0 font-['Inter',sans-serif] text-[15px] font-bold text-[#243f2a]">
+                        ${(Number(item.price) * Number(item.quantity)).toFixed(2)}
+                      </p>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {cartItems.length > 0 && (
+          <div className="border-t border-[#8fa58d]/25 px-[20px] py-[20px]">
+            <div className="mb-[16px] flex items-center justify-between">
+              <span className="font-['Inter',sans-serif] text-[14px] uppercase tracking-[0.12em] text-[#5c7a5d]">
+                Subtotal
+              </span>
+
+              <strong className="font-['Inter',sans-serif] text-[21px] text-[#243f2a]">
+                ${cartTotal.toFixed(2)}
+              </strong>
+            </div>
+
+            <button
+              type="button"
+              className="h-[52px] w-full cursor-pointer border-0 bg-[#243f2a] font-['Inter',sans-serif] text-[13px] font-medium uppercase tracking-[0.14em] text-white transition hover:bg-[#1a2f1f]"
+            >
+              Checkout
+            </button>
+
+            <button
+              type="button"
+              onClick={clearCart}
+              className="mt-[11px] h-[42px] w-full cursor-pointer border border-[#8fa58d]/35 bg-transparent font-['Inter',sans-serif] text-[12px] font-medium uppercase tracking-[0.14em] text-[#243f2a] transition hover:bg-[#e6eee2]"
+            >
+              Clear cart
+            </button>
+          </div>
+        )}
+      </aside>
 
       {/* ==================== Header ==================== */}
       <header className="absolute left-0 top-0 z-40 w-full pt-[27px] max-[1024px]:pt-[22px] max-[767px]:pt-[15px]">
@@ -212,9 +661,13 @@ const Hero = () => {
               Login
             </a>
 
-            <a href="#cart" className={desktopLinkClass}>
-              Cart (0)
-            </a>
+            <button
+              type="button"
+              onClick={openCartPopup}
+              className={`${desktopLinkClass} cursor-pointer border-0 bg-transparent p-0`}
+            >
+              Cart ({cartCount})
+            </button>
           </nav>
 
           {/* ==================== Mobile Quick Navigation ==================== */}
@@ -229,12 +682,13 @@ const Hero = () => {
               Shop
             </a>
 
-            <a
-              href="#cart"
-              className="font-['Inter',sans-serif] text-[14px] font-normal uppercase leading-none text-[#f8faf4] no-underline max-[767px]:text-[clamp(12px,4vw,14px)]"
+            <button
+              type="button"
+              onClick={openCartPopup}
+              className="cursor-pointer border-0 bg-transparent p-0 font-['Inter',sans-serif] text-[14px] font-normal uppercase leading-none text-[#f8faf4] max-[767px]:text-[clamp(12px,4vw,14px)]"
             >
-              Cart (0)
-            </a>
+              Cart ({cartCount})
+            </button>
           </nav>
 
           <button
@@ -289,7 +743,7 @@ const Hero = () => {
         {/* ==================== Product Image ==================== */}
         <div
           key={activeSlide.id}
-          className="beauty-product-animate pointer-events-none absolute left-[3.2%] top-[5.2%] z-[50] h-[103.5%] min-h-[720px] origin-center max-[1600px]:left-[3%] max-[1600px]:top-[12.3%] max-[1600px]:h-[104%] max-[1600px]:min-h-[700px] max-[1440px]:left-[2.7%] max-[1440px]:top-[12.3%] max-[1440px]:h-[103%] max-[1440px]:min-h-[675px] max-[1280px]:left-[2.8%] max-[1280px]:top-[6.7%] max-[1280px]:h-[99.5%] max-[1280px]:min-h-[630px] max-[1024px]:left-[2.2%] max-[1024px]:top-[12.5%] max-[1024px]:h-[80%] max-[1024px]:min-h-[500px] max-[880px]:left-[1%] max-[880px]:top-[13%] max-[880px]:h-[78%] max-[880px]:min-h-[470px] max-[767px]:!left-1/2 max-[767px]:!right-auto max-[767px]:top-[clamp(335px,47svh,382px)] max-[767px]:z-[24] max-[767px]:h-[clamp(285px,42svh,355px)] max-[767px]:min-h-0 max-[767px]:!-translate-x-1/2 max-[767px]:![animation:none] max-[430px]:top-[clamp(370px,47svh,450px)] max-[390px]:top-[clamp(355px,47svh,382px)] max-[360px]:h-[clamp(270px,41svh,335px)]"
+          className="beauty-product-animate pointer-events-none absolute left-[2.1%] top-[14%] z-[23] h-[clamp(650px,46.5vw,730px)] origin-center max-[1600px]:left-[2.2%] max-[1600px]:top-[11.6%] max-[1600px]:h-[clamp(620px,47vw,700px)] max-[1600px]:min-h-0 max-[1440px]:left-[2.1%] max-[1440px]:top-[13.2%] max-[1440px]:h-[clamp(690px,46.2vw,700px)] max-[1440px]:min-h-0 max-[1280px]:left-[2.4%] max-[1280px]:top-[6.2%] max-[1280px]:h-[clamp(500px,46vw,550px)] max-[1280px]:min-h-0 max-[1024px]:left-[2%] max-[1024px]:top-[13%] max-[1024px]:h-[76%] max-[1024px]:min-h-[470px] max-[880px]:left-[1%] max-[880px]:top-[13%] max-[880px]:h-[74%] max-[880px]:min-h-[440px] max-[767px]:!left-1/2 max-[767px]:!right-auto max-[767px]:top-[clamp(335px,47svh,382px)] max-[767px]:z-[24] max-[767px]:h-[clamp(285px,42svh,355px)] max-[767px]:min-h-0 max-[767px]:!-translate-x-1/2 max-[767px]:![animation:none] max-[430px]:top-[clamp(370px,47svh,450px)] max-[390px]:top-[clamp(355px,47svh,382px)] max-[360px]:h-[clamp(270px,41svh,335px)]"
         >
           <img
             src={activeSlide.productImage}
@@ -301,9 +755,9 @@ const Hero = () => {
         {/* ==================== Hero Text ==================== */}
         <div
           key={`copy-${activeSlide.id}`}
-          className="beauty-copy-animate absolute left-[35.1%] top-[20.3%] z-[24] w-[940px] max-[1600px]:left-[35.1%] max-[1600px]:top-[25.3%] max-[1600px]:w-[900px] max-[1440px]:left-[36.1%] max-[1440px]:top-[25%] max-[1440px]:w-[820px] max-[1280px]:left-[35.4%] max-[1280px]:top-[21.2%] max-[1280px]:w-[780px] max-[1024px]:left-[35.8%] max-[1024px]:top-[23.5%] max-[1024px]:w-[610px] max-[880px]:left-[36.5%] max-[880px]:top-[30%] max-[880px]:w-[520px] max-[767px]:!left-1/2 max-[767px]:!right-auto max-[767px]:top-[clamp(120px,13svh,106px)] max-[767px]:z-[25] max-[767px]:w-[min(calc(100%_-_52px),330px)] max-[767px]:!-translate-x-1/2 max-[767px]:text-center max-[767px]:![animation:none] max-[360px]:w-[min(calc(100%_-_42px),306px)]"
+          className="beauty-copy-animate absolute left-[36.8%] top-[20.6%] z-[25] w-[900px] max-[1600px]:left-[36.4%] max-[1600px]:top-[25.2%] max-[1600px]:w-[860px] max-[1440px]:left-[36.7%] max-[1440px]:top-[25%] max-[1440px]:w-[780px] max-[1280px]:left-[36%] max-[1280px]:top-[21.5%] max-[1280px]:w-[720px] max-[1024px]:left-[36.2%] max-[1024px]:top-[24%] max-[1024px]:w-[560px] max-[880px]:left-[36.5%] max-[880px]:top-[30%] max-[880px]:w-[500px] max-[767px]:!left-1/2 max-[767px]:!right-auto max-[767px]:top-[clamp(120px,13svh,106px)] max-[767px]:z-[25] max-[767px]:w-[min(calc(100%_-_52px),330px)] max-[767px]:!-translate-x-1/2 max-[767px]:text-center max-[767px]:![animation:none] max-[360px]:w-[min(calc(100%_-_42px),306px)]"
         >
-          <h1 className="m-0 font-['Cormorant_Garamond',serif] text-[clamp(86px,7.1vw,122px)] font-light leading-[1.02] tracking-[-0.052em] text-[#f7faf4] max-[1440px]:text-[clamp(82px,7.2vw,104px)] max-[1280px]:text-[clamp(74px,7.45vw,96px)] max-[1024px]:text-[clamp(62px,7.6vw,78px)] max-[1024px]:leading-[1.04] max-[880px]:text-[clamp(54px,7.6vw,66px)] max-[767px]:mx-auto max-[767px]:text-[clamp(40px,12.9vw,50px)] max-[767px]:leading-[1.02] max-[767px]:tracking-[-0.052em]">
+          <h1 className="m-0 font-['Cormorant_Garamond',serif] text-[clamp(78px,6.35vw,110px)] font-light leading-[1.025] tracking-[-0.048em] text-[#f7faf4] max-[1600px]:text-[clamp(76px,6.55vw,104px)] max-[1440px]:text-[clamp(72px,6.65vw,94px)] max-[1280px]:text-[clamp(66px,6.8vw,86px)] max-[1024px]:text-[clamp(56px,6.9vw,70px)] max-[1024px]:leading-[1.04] max-[880px]:text-[clamp(50px,7vw,58px)] max-[767px]:mx-auto max-[767px]:text-[clamp(40px,12.9vw,50px)] max-[767px]:leading-[1.02] max-[767px]:tracking-[-0.052em]">
             {activeSlide.title.map((line) => (
               <span key={line} className="block">
                 {line}
@@ -331,7 +785,9 @@ const Hero = () => {
           <button
             key={slide.id}
             type="button"
-            className="h-[5px] w-[5px] rotate-45 cursor-pointer border-0 bg-[#f7faf4] p-0"
+            className={`h-[5px] w-[5px] rotate-45 cursor-pointer border-0 p-0 ${
+              activeDot === index ? "bg-[#25482d]" : "bg-[#f7faf4]"
+            }`}
             onClick={() => setActiveDot(index)}
             aria-label={`Go to ${slide.productName}`}
             aria-current={activeDot === index ? "true" : "false"}
@@ -378,9 +834,13 @@ const Hero = () => {
             Login
           </a>
 
-          <a href="#cart" onClick={() => setMenuOpen(false)} className={mobileMenuLinkClass}>
-            Cart (0)
-          </a>
+          <button
+            type="button"
+            onClick={openCartPopup}
+            className={`${mobileMenuLinkClass} cursor-pointer border-0 bg-transparent p-0 text-left`}
+          >
+            Cart ({cartCount})
+          </button>
         </nav>
       </aside>
     </section>
