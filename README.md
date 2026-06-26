@@ -8,7 +8,8 @@ A modern, fully responsive beauty brand landing page built with **React** and **
 
 ## Preview
 
-![Velvety Landing Page Preview](./public/preview.png)
+<img width="1280" height="800" alt="Beauty-Landing-Page" src="https://github.com/user-attachments/assets/42c1021a-5e12-47be-bd0a-ab890e0ce44a" />
+
 
 ---
 
