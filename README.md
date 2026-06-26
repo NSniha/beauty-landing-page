@@ -2,7 +2,7 @@
 
 A modern, fully responsive beauty brand landing page built with **React** and **Tailwind CSS**. Designed for a fictional organic skincare company called **Velvety**, featuring product showcases, filterable product grids, testimonials, and more.
 
-> 🌿 Live Demo: [https://chipper-stroopwafel-19be08.netlify.app/](#)
+> 🌿 Live Demo: [https://radiant-biscuit-b7350a.netlify.app/](#)
 
 ---
 
