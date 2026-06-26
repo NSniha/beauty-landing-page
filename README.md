@@ -76,8 +76,7 @@ beauty-landing-page/
 
 ## Author
 
-**Niha** — Frontend Developer
-[GitHub](https://github.com/NSniha) · [Fiverr](#) · [Upwork](#)
+**Nobonita Saha Niha** — Frontend Developer
 
 ---
 
