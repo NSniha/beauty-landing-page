@@ -22,7 +22,8 @@
 
 <br /><br />
 
-<img src="docs/preview-desktop.png" alt="Velvety landing page preview" width="90%" />
+<img width="1280" height="800" alt="613437432-42c1021a-5e12-47be-bd0a-ab890e0ce44a" src="https://github.com/user-attachments/assets/9f3345d5-1ae2-4df4-8723-a3cbdfa088d7" />
+
 
 </div>
 
