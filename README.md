@@ -6,16 +6,23 @@
 
 <br />
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-Visit_Site-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://radiant-biscuit-b7350a.netlify.app/)
-[![Source Code](https://img.shields.io/badge/Source_Code-GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/NSniha/beauty-landing-page)
-
-![React](https://img.shields.io/badge/React_18-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-0F172A?style=for-the-badge&logo=tailwindcss&logoColor=38BDF8)
-![Vite](https://img.shields.io/badge/Vite-1E1B4B?style=for-the-badge&logo=vite&logoColor=FFD62E)
+[![Live Demo](https://img.shields.io/badge/LIVE_DEMO-Explore_Velvety-52B788?style=for-the-badge&logo=netlify&logoColor=white&labelColor=1B4332)](https://radiant-biscuit-b7350a.netlify.app/)
+&nbsp;
+[![Source Code](https://img.shields.io/badge/SOURCE_CODE-View_on_GitHub-6366F1?style=for-the-badge&logo=github&logoColor=white&labelColor=1E1B4B)](https://github.com/NSniha/beauty-landing-page)
 
 <br />
 
-<img src="docs/preview-desktop.png" alt="Velvety landing page, desktop view" width="90%" />
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" width="46" height="46" alt="React" />&nbsp;&nbsp;
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" width="46" height="46" alt="Tailwind CSS" />&nbsp;&nbsp;
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vitejs/vitejs-original.svg" width="46" height="46" alt="Vite" />&nbsp;&nbsp;
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" width="46" height="46" alt="JavaScript" />&nbsp;&nbsp;
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" width="46" height="46" alt="HTML5" />&nbsp;&nbsp;
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" width="46" height="46" alt="CSS3" />&nbsp;&nbsp;
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/netlify/netlify-original.svg" width="46" height="46" alt="Netlify" />
+
+<br /><br />
+
+<img src="docs/preview-desktop.png" alt="Velvety landing page preview" width="90%" />
 
 </div>
 
@@ -67,35 +74,37 @@
 <div align="center">
 <table>
   <tr>
-    <td align="center" width="110">
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" width="52" height="52" alt="React" /><br /><b>React 18</b>
+    <td align="center" width="120">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" width="60" height="60" alt="React" /><br /><b>React 18</b>
     </td>
-    <td align="center" width="110">
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" width="52" height="52" alt="Tailwind CSS" /><br /><b>Tailwind CSS</b>
+    <td align="center" width="120">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" width="60" height="60" alt="Tailwind CSS" /><br /><b>Tailwind CSS</b>
     </td>
-    <td align="center" width="110">
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vitejs/vitejs-original.svg" width="52" height="52" alt="Vite" /><br /><b>Vite</b>
+    <td align="center" width="120">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vitejs/vitejs-original.svg" width="60" height="60" alt="Vite" /><br /><b>Vite</b>
     </td>
-    <td align="center" width="110">
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" width="52" height="52" alt="JavaScript" /><br /><b>JavaScript</b>
+    <td align="center" width="120">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" width="60" height="60" alt="JavaScript" /><br /><b>JavaScript</b>
     </td>
   </tr>
   <tr>
-    <td align="center" width="110">
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" width="52" height="52" alt="HTML5" /><br /><b>HTML5</b>
+    <td align="center" width="120">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" width="60" height="60" alt="HTML5" /><br /><b>HTML5</b>
     </td>
-    <td align="center" width="110">
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" width="52" height="52" alt="CSS3" /><br /><b>CSS3</b>
+    <td align="center" width="120">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" width="60" height="60" alt="CSS3" /><br /><b>CSS3</b>
     </td>
-    <td align="center" width="110">
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/eslint/eslint-original.svg" width="52" height="52" alt="ESLint" /><br /><b>ESLint</b>
+    <td align="center" width="120">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/eslint/eslint-original.svg" width="60" height="60" alt="ESLint" /><br /><b>ESLint</b>
     </td>
-    <td align="center" width="110">
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/netlify/netlify-original.svg" width="52" height="52" alt="Netlify" /><br /><b>Netlify</b>
+    <td align="center" width="120">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/netlify/netlify-original.svg" width="60" height="60" alt="Netlify" /><br /><b>Netlify</b>
     </td>
   </tr>
 </table>
 </div>
+
+<br />
 
 | Technology | Purpose |
 | :-- | :-- |
@@ -155,25 +164,17 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ---
 
-## 📸 Screenshots
-
-<div align="center">
-<img src="docs/preview-desktop.png" alt="Desktop view" width="70%" />
-<br /><br />
-<img src="docs/preview-mobile.png" alt="Mobile view" width="25%" />
-</div>
-
----
-
 ## 👩‍💻 Author
 
 **Nobonita Saha Niha** — Front-End Developer
 
 I build responsive, pixel-accurate websites from Figma designs using React, Next.js and Tailwind CSS.
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/nobonita-saha-niha-04b501214/)
-[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/NSniha)
-[![Upwork](https://img.shields.io/badge/Upwork-14A800?style=for-the-badge&logo=upwork&logoColor=white)](YOUR_UPWORK_PROFILE_URL)
+[![LinkedIn](https://img.shields.io/badge/LINKEDIN-Connect_with_me-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white&labelColor=084482)](https://www.linkedin.com/in/nobonita-saha-niha-04b501214/)
+&nbsp;
+[![GitHub](https://img.shields.io/badge/GITHUB-Follow_me-6366F1?style=for-the-badge&logo=github&logoColor=white&labelColor=1E1B4B)](https://github.com/NSniha)
+&nbsp;
+[![Upwork](https://img.shields.io/badge/UPWORK-Hire_me-14A800?style=for-the-badge&logo=upwork&logoColor=white&labelColor=0B5E00)](YOUR_UPWORK_PROFILE_URL)
 
 ---
 
