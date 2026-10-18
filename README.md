@@ -175,7 +175,6 @@ I build responsive, pixel-accurate websites from Figma designs using React, Next
 &nbsp;
 [![GitHub](https://img.shields.io/badge/GITHUB-Follow_me-6366F1?style=for-the-badge&logo=github&logoColor=white&labelColor=1E1B4B)](https://github.com/NSniha)
 &nbsp;
-[![Upwork](https://img.shields.io/badge/UPWORK-Hire_me-14A800?style=for-the-badge&logo=upwork&logoColor=white&labelColor=0B5E00)](YOUR_UPWORK_PROFILE_URL)
 
 ---
 
